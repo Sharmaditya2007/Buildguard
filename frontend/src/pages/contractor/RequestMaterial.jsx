@@ -52,6 +52,13 @@ export const RequestMaterial = ({ onComplete }) => {
 
   const handleSubmit = async () => {
     setSubmitted(true);
+    await apiClient.requestMaterial({
+      materialType,
+      quantity,
+      unit,
+      notes,
+      aiAnalysis
+    });
     setTimeout(() => {
       if (onComplete) onComplete();
     }, 1800);

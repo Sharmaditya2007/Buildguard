@@ -1,6 +1,7 @@
 import React from 'react';
 import { HardHat, ShieldCheck, UserCheck, LogOut, ArrowRightLeft } from 'lucide-react';
 import { Badge } from '../ui/Badge';
+import { apiClient } from '../../services/api';
 
 export const Navbar = ({
   role = 'homeowner',
@@ -58,6 +59,20 @@ export const Navbar = ({
             <span className="text-amber-700 capitalize font-extrabold">
               {role === 'homeowner' ? 'Contractor' : 'Homeowner'}
             </span>
+          </button>
+
+          {/* Reset Demo Database button */}
+          <button
+            onClick={() => {
+              if (window.confirm('Reset local database back to default initial state (10 deliveries, 92% trust score)?')) {
+                apiClient.resetDatabase();
+                window.location.reload();
+              }
+            }}
+            className="hidden lg:inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-slate-400 hover:text-rose-600 transition-colors cursor-pointer"
+            title="Reset LocalStorage DB"
+          >
+            Reset DB
           </button>
 
           {/* User Profile avatar */}

@@ -46,8 +46,14 @@ export const UploadProgress = ({ onComplete }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSubmitted(true);
+    await apiClient.uploadProgress({
+      stage: currentStage,
+      notes,
+      photos,
+      aiSummary: aiResult?.summary || `${currentStage} progress recorded with photos.`
+    });
     setTimeout(() => {
       if (onComplete) onComplete();
     }, 1800);

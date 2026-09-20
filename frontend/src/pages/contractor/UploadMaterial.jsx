@@ -43,8 +43,15 @@ export const UploadMaterial = ({ onComplete }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSubmitted(true);
+    await apiClient.uploadMaterialDelivery({
+      materialType,
+      quantity,
+      unit,
+      imageUrl,
+      notes: aiResult?.summary || `Logged ${quantity} ${unit} of ${materialType}. AI verified.`
+    });
     setTimeout(() => {
       if (onComplete) onComplete();
     }, 1800);
