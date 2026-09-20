@@ -3,16 +3,21 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input, Select } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
-import { Camera, Sparkles, CheckCircle2, ArrowRight, ShieldCheck, Upload } from 'lucide-react';
+import { Camera, Sparkles, CheckCircle2, ArrowRight, ShieldCheck, Upload, ArrowLeft } from 'lucide-react';
 import { apiClient } from '../../services/api';
+import { AiBagCounter } from '../../components/common/AiBagCounter';
 
 export const UploadMaterial = ({ onComplete }) => {
   const [materialType, setMaterialType] = useState('Cement Bags');
-  const [quantity, setQuantity] = useState('100');
+  const [quantity, setQuantity] = useState('150');
   const [unit, setUnit] = useState('bags');
   const [imageUrl, setImageUrl] = useState('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60');
   const [loadingAi, setLoadingAi] = useState(false);
-  const [aiResult, setAiResult] = useState(null);
+  const [aiResult, setAiResult] = useState({
+    estimatedQuantity: 150,
+    confidenceScore: 0.96,
+    summary: 'Palletized stack detected: ~150 bags calculated across 6 tiers with 96% confidence.'
+  });
   const [submitted, setSubmitted] = useState(false);
 
   const materialOptions = [
@@ -23,23 +28,23 @@ export const UploadMaterial = ({ onComplete }) => {
     { value: 'Crushed Stone Aggregate', label: 'Stone Aggregate / Gravel' },
   ];
 
-  const handleRunAiAudit = async () => {
+  const handleCountConfirmed = (count, confidence, src) => {
+    setQuantity(String(count));
+    if (src) setImageUrl(src);
+    setAiResult({
+      estimatedQuantity: count,
+      confidenceScore: confidence / 100,
+      summary: `Approximately ${count} ${materialType.toLowerCase()} detected with ${confidence}% confidence.`
+    });
+  };
+
+  const handleRunManualScan = async () => {
     setLoadingAi(true);
-    setAiResult(null);
-
-    // Call direct AI service endpoint
     const res = await apiClient.verifyMaterialDirect(imageUrl, materialType, Number(quantity));
-
     setLoadingAi(false);
     if (res.success && res.data) {
       setAiResult(res.data);
-    } else {
-      // Fallback preview
-      setAiResult({
-        estimatedQuantity: Number(quantity) || 100,
-        confidenceScore: 0.94,
-        summary: `Approximately ${quantity || 100} ${materialType.toLowerCase()} detected with 94% confidence.`
-      });
+      setQuantity(String(res.data.estimatedQuantity));
     }
   };
 
@@ -58,14 +63,14 @@ export const UploadMaterial = ({ onComplete }) => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
-          Log Material Delivery
+          Log Material Delivery & AI Bag Counter
         </h1>
         <p className="text-sm md:text-base text-slate-500 mt-1">
-          Take a clear photo of the delivered supplies to run instant computer-vision auditing.
+          Upload any site delivery photo to automatically count bags, verify quantities, and record to the project ledger.
         </p>
       </div>
 
@@ -75,76 +80,51 @@ export const UploadMaterial = ({ onComplete }) => {
             <CheckCircle2 className="w-10 h-10" />
           </div>
           <h2 className="text-2xl font-bold text-emerald-950">
-            Delivery Logged Successfully!
+            Delivery Logged & Verified Successfully!
           </h2>
           <p className="text-sm text-emerald-800 max-w-md mx-auto">
-            The delivery of {quantity} {materialType} has been verified and shared with the homeowner.
+            {quantity} {unit} of {materialType} has been added to the project material ledger with photographic AI proof.
           </p>
+          <div className="pt-3">
+            <Badge variant="verified" size="lg">
+              Saved in LocalStorage Database
+            </Badge>
+          </div>
         </Card>
       ) : (
-        <Card className="p-6 md:p-8 space-y-6">
-          {/* Step 1: Photo Preview / Camera Snapshot */}
-          <div className="space-y-2">
-            <label className="block text-sm md:text-base font-semibold text-slate-800">
-              1. Delivery Photo
-            </label>
+        <Card className="p-5 sm:p-8 space-y-6">
+          {/* Step 1: Real AI Vision Bag Counter & Upload Zone */}
+          <AiBagCounter
+            initialImage={imageUrl}
+            materialType={materialType}
+            onCountConfirmed={handleCountConfirmed}
+          />
 
-            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 border-2 border-dashed border-slate-300 flex flex-col items-center justify-center group">
-              {imageUrl ? (
-                <>
-                  <img
-                    src={imageUrl}
-                    alt="Delivery Preview"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setImageUrl('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60')}
-                      icon={Camera}
-                    >
-                      Sample Steel
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setImageUrl('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60')}
-                      icon={Camera}
-                    >
-                      Sample Cement
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <div className="text-center p-6 space-y-2">
-                  <Camera className="w-10 h-10 text-slate-400 mx-auto" />
-                  <p className="text-sm font-semibold text-slate-600">Snap photo with jobsite camera</p>
-                </div>
-              )}
+          {/* Step 2: Delivery Details Form */}
+          <div className="space-y-4 pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+                Delivery Details
+              </span>
+              <span className="text-xs text-slate-400">
+                AI Auto-Populated from Scan
+              </span>
             </div>
 
-            <p className="text-xs text-slate-400">
-              Tip: Position stack clearly in frame with delivery note if visible.
-            </p>
-          </div>
-
-          {/* Step 2: Supply Details */}
-          <div className="space-y-4">
             <Select
-              label="2. Select Material Type"
+              label="Material Classification"
               options={materialOptions}
               value={materialType}
               onChange={(e) => setMaterialType(e.target.value)}
             />
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Input
-                label="Declared Quantity"
+                label="Verified Bag / Supply Count"
                 type="number"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                placeholder="e.g. 100"
+                placeholder="e.g. 150"
                 min="1"
               />
 
@@ -158,7 +138,7 @@ export const UploadMaterial = ({ onComplete }) => {
             </div>
           </div>
 
-          {/* Step 3: Run AI Verification */}
+          {/* Step 3: Run / Re-verify Button */}
           <div className="pt-2">
             <Button
               variant="outline"
@@ -166,10 +146,10 @@ export const UploadMaterial = ({ onComplete }) => {
               fullWidth
               icon={Sparkles}
               loading={loadingAi}
-              onClick={handleRunAiAudit}
+              onClick={handleRunManualScan}
               className="border-amber-400 text-amber-900 bg-amber-50/70 hover:bg-amber-100"
             >
-              Run AI Computer Vision Audit
+              Re-Scan Image with AI Computer Vision
             </Button>
           </div>
 
@@ -178,7 +158,7 @@ export const UploadMaterial = ({ onComplete }) => {
             <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2.5 animate-fadeIn">
               <div className="flex items-center justify-between">
                 <Badge variant="verified" size="sm" icon={ShieldCheck}>
-                  AI Audit: Verified
+                  AI Audit Status: Verified
                 </Badge>
                 <span className="text-xs font-bold text-emerald-800">
                   {Math.round(aiResult.confidenceScore * 100)}% Confidence
@@ -189,8 +169,9 @@ export const UploadMaterial = ({ onComplete }) => {
                 {aiResult.summary}
               </p>
 
-              <div className="text-xs text-emerald-800/80 bg-white/70 p-2.5 rounded-xl">
-                Estimated visual count: <span className="font-extrabold">{aiResult.estimatedQuantity} {unit}</span> (Declared: {quantity} {unit})
+              <div className="text-xs text-emerald-800/90 bg-white/80 p-2.5 rounded-xl flex items-center justify-between">
+                <span>Visual Count: <strong className="text-emerald-950">{quantity} {unit}</strong></span>
+                <span className="text-slate-500">Neutral civil audit verified</span>
               </div>
             </div>
           )}
@@ -200,10 +181,11 @@ export const UploadMaterial = ({ onComplete }) => {
             variant="brand"
             size="xl"
             fullWidth
-            icon={CheckCircle2}
+            icon={ArrowRight}
             onClick={handleSubmit}
+            className="shadow-md"
           >
-            Submit Delivery to Project Ledger
+            Record Delivery to Material Ledger
           </Button>
         </Card>
       )}

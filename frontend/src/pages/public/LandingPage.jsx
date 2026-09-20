@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
+import { AiBagCounter } from '../../components/common/AiBagCounter';
 import {
   HardHat,
   ShieldCheck,
@@ -172,62 +173,33 @@ export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
           Instant 1-tap demo • No credit card or installation needed • WhatsApp-level simplicity
         </p>
 
-        {/* Hero Interactive Preview Card */}
-        <div className="pt-8 max-w-3xl mx-auto">
-          <div className="bg-white rounded-3xl border-2 border-slate-200/90 shadow-stripe-lg overflow-hidden p-4 sm:p-6 text-left space-y-4">
+        {/* Hero Interactive Preview Card with Live AI Bag Counter */}
+        <div className="pt-8 max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl border-2 border-slate-200/90 shadow-stripe-lg overflow-hidden p-4 sm:p-7 text-left space-y-4">
             <div className="flex items-center justify-between border-b pb-3 border-slate-100">
               <div className="flex items-center gap-2.5">
                 <span className="w-3 h-3 rounded-full bg-emerald-500 animate-ping" />
-                <span className="text-xs md:text-sm font-bold text-slate-900">Live Delivery Verification</span>
+                <span className="text-sm sm:text-base font-bold text-slate-900 font-heading">
+                  Interactive AI Computer Vision Bag Counter
+                </span>
               </div>
               <Badge variant="verified" size="sm" icon={CheckCircle2}>
-                AI Verified • 96% Confidence
+                Live Scanner Active
               </Badge>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 border border-slate-200">
-                <img
-                  src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60"
-                  alt="Cement delivery photo"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[11px] px-2.5 py-1 rounded-lg font-bold">
-                  Cement Bags • 150 Declared
-                </div>
-              </div>
+            <AiBagCounter />
 
-              <div className="space-y-3">
-                <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/70 space-y-1">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                    AI Vision Analysis
-                  </span>
-                  <p className="text-sm font-bold text-slate-800">
-                    "Approximately 150 cement bags detected with 96% confidence."
-                  </p>
-                </div>
-
-                <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs font-bold text-slate-700">
-                    <span>Material Trust Score</span>
-                    <span className="text-emerald-600">95% Verified</span>
-                  </div>
-                  <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
-                    <div className="bg-emerald-500 h-full w-[95%] rounded-full" />
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 pt-1">
-                  <Button
-                    variant="brand"
-                    size="sm"
-                    fullWidth
-                    onClick={onGoHomeowner}
-                  >
-                    Explore Homeowner Dashboard
-                  </Button>
-                </div>
-              </div>
+            <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 border-t border-slate-100">
+              <span>Try uploading any delivery photo from your phone or laptop.</span>
+              <Button
+                variant="brand"
+                size="sm"
+                onClick={onGoHomeowner}
+                icon={ShieldCheck}
+              >
+                Enter Full Homeowner Dashboard
+              </Button>
             </div>
           </div>
         </div>
