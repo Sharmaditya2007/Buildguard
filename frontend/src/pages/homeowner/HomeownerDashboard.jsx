@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card } from '../../components/ui/Card';
 import { StatCard } from '../../components/ui/StatCard';
 import { ProgressBar } from '../../components/ui/ProgressBar';
@@ -15,13 +15,32 @@ import {
   Camera,
   ArrowRight,
   ShieldCheck,
-  Calendar
+  Calendar,
+  Upload
 } from 'lucide-react';
 import { apiClient } from '../../services/api';
 import { AiBagCounter } from '../../components/common/AiBagCounter';
 
 export const HomeownerDashboard = ({ onNavigate }) => {
   const [showInlineScanner, setShowInlineScanner] = useState(false);
+  const [directUserImage, setDirectUserImage] = useState(null);
+  const homeFileInputRef = useRef(null);
+
+  const handleHomeDirectUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result;
+      if (dataUrl) {
+        setDirectUserImage(dataUrl);
+        setShowInlineScanner(true);
+      }
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  };
   const [data, setData] = useState({
     projectName: 'Greenwood Villa B-4',
     currentStage: 'Framing & Structure',
@@ -137,6 +156,24 @@ export const HomeownerDashboard = ({ onNavigate }) => {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto flex-shrink-0">
+          <input
+            type="file"
+            ref={homeFileInputRef}
+            accept="image/*"
+            className="hidden"
+            onChange={handleHomeDirectUpload}
+          />
+
+          <Button
+            variant="brand"
+            size="md"
+            icon={Upload}
+            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none shadow-md cursor-pointer"
+            onClick={() => homeFileInputRef.current?.click()}
+          >
+            Upload from PC
+          </Button>
+
           <Button
             variant={showInlineScanner ? 'outline' : 'secondary'}
             size="md"
@@ -149,11 +186,11 @@ export const HomeownerDashboard = ({ onNavigate }) => {
           <Button
             variant="primary"
             size="md"
-            className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none shadow-md cursor-pointer"
+            className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold border-none shadow-md cursor-pointer"
             onClick={() => onNavigate('check-image')}
           >
-            <Camera className="w-5 h-5" />
-            Upload Image to Check
+            <Camera className="w-5 h-5 text-amber-400" />
+            Full Screen
             <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
@@ -176,7 +213,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
               ✕ Close
             </Button>
           </div>
-          <AiBagCounter initialImage="/cement-5-bags.jpg" />
+          <AiBagCounter initialImage={directUserImage || "/cement-5-bags.jpg"} />
         </Card>
       )}
 

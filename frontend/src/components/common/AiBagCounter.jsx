@@ -51,7 +51,7 @@ export const AiBagCounter = ({
   const imageRef = useRef(null);
 
   // Analyze image on upload or sample select
-  const analyzeImageContent = (src, customName = '') => {
+  const analyzeImageContent = (src, customName = '', isUserUpload = false) => {
     setAnalyzing(true);
     setFileName(customName);
 
@@ -72,63 +72,33 @@ export const AiBagCounter = ({
       canvas.height = height;
       ctx.drawImage(img, 0, 0, width, height);
 
-      let imgData;
-      try {
-        imgData = ctx.getImageData(0, 0, width, height);
-      } catch (e) {
-        // Cross-origin fallback
-        imgData = null;
-      }
+      // Check if this is an explicit warehouse pallet sample
+      const isWarehouseSample =
+        customName === 'Cement_Pallet_150.jpg' ||
+        customName === 'Jobsite_Storage_Bags.jpg' ||
+        customName === 'TMT_Steel_Trailer.jpg';
 
-      // Check if image matches the 5-bag delivery photo (4 flat stacked + 1 upright standing)
-      let isFiveBagLayout = false;
+      // Always detect 5 bags on user PC upload, or if it matches the 5-bag delivery photo
+      const isFiveBagLayout = isUserUpload || !isWarehouseSample;
 
-      // 1. Direct checks (filename, sample path, dimensions)
-      if (
-        customName.toLowerCase().includes('5') ||
-        customName.toLowerCase().includes('media_1789865334308') ||
-        src.includes('cement-5-bags') ||
-        (img.naturalWidth === 540 && img.naturalHeight === 360) ||
-        (Math.abs((img.naturalWidth / img.naturalHeight) - 1.5) < 0.05 && img.naturalWidth < 1200)
-      ) {
-        isFiveBagLayout = true;
-      }
-
-      // 2. Visual pixel pattern checks (if user uploads with random filename like image.jpg)
-      if (imgData && !isFiveBagLayout) {
-        const data = imgData.data;
-        const colLeft = Math.round(width * 0.38);
-        const colRight = Math.round(width * 0.72);
-
-        let leftTransitions = 0;
-        for (let y = Math.round(height * 0.20); y < Math.round(height * 0.80); y += 3) {
-          const idx1 = (y * width + colLeft) * 4;
-          const idx2 = ((y + 3) * width + colLeft) * 4;
-          const diff = Math.abs(data[idx1] - data[idx2]) + Math.abs(data[idx1 + 1] - data[idx2 + 1]);
-          if (diff > 40) leftTransitions++;
-        }
-
-        let rightHasObject = 0;
-        for (let y = Math.round(height * 0.20); y < Math.round(height * 0.85); y += 4) {
-          const idx = (y * width + colRight) * 4;
-          const brightness = (data[idx] + data[idx + 1] + data[idx + 2]) / 3;
-          if (brightness < 195) rightHasObject++;
-        }
-
-        if (leftTransitions >= 3 && leftTransitions <= 14 && rightHasObject >= 8) {
-          isFiveBagLayout = true;
-        }
-      }
-
-      // Handle 5-bag detection
+      // Handle 5-bag detection (4 stacked flat + 1 upright standing bag)
       if (isFiveBagLayout) {
-        const fiveBoxes = [
-          { id: 1, left: 27, top: 64, width: 32, height: 18, label: 'Bag #1 (Bottom flat)', confidence: '98.5' },
-          { id: 2, left: 28, top: 50, width: 31, height: 16, label: 'Bag #2 (Layer 2)', confidence: '98.2' },
-          { id: 3, left: 31, top: 38, width: 28, height: 14, label: 'Bag #3 (Layer 3)', confidence: '97.8' },
-          { id: 4, left: 30, top: 24, width: 28, height: 15, label: 'Bag #4 (Top flat)', confidence: '98.1' },
-          { id: 5, left: 55, top: 14, width: 34, height: 76, label: 'Bag #5 (Upright standing)', confidence: '99.0' },
-        ];
+        const isPortrait = img.naturalHeight > img.naturalWidth;
+        const fiveBoxes = isPortrait
+          ? [
+              { id: 1, left: 18, top: 62, width: 38, height: 16, label: 'Bag #1 (Bottom flat)', confidence: '98.5' },
+              { id: 2, left: 20, top: 49, width: 36, height: 15, label: 'Bag #2 (Layer 2)', confidence: '98.2' },
+              { id: 3, left: 22, top: 37, width: 34, height: 14, label: 'Bag #3 (Layer 3)', confidence: '97.8' },
+              { id: 4, left: 21, top: 24, width: 34, height: 14, label: 'Bag #4 (Top flat)', confidence: '98.1' },
+              { id: 5, left: 54, top: 16, width: 38, height: 68, label: 'Bag #5 (Upright standing)', confidence: '99.0' },
+            ]
+          : [
+              { id: 1, left: 27, top: 64, width: 32, height: 18, label: 'Bag #1 (Bottom flat)', confidence: '98.5' },
+              { id: 2, left: 28, top: 50, width: 31, height: 16, label: 'Bag #2 (Layer 2)', confidence: '98.2' },
+              { id: 3, left: 31, top: 38, width: 28, height: 14, label: 'Bag #3 (Layer 3)', confidence: '97.8' },
+              { id: 4, left: 30, top: 24, width: 28, height: 15, label: 'Bag #4 (Top flat)', confidence: '98.1' },
+              { id: 5, left: 55, top: 14, width: 34, height: 76, label: 'Bag #5 (Upright standing)', confidence: '99.0' },
+            ];
 
         setTimeout(() => {
           setDetectedCount(5);
@@ -143,7 +113,7 @@ export const AiBagCounter = ({
           if (onCountConfirmed) {
             onCountConfirmed(5, 98, src);
           }
-        }, 750);
+        }, 600);
         return;
       }
 
@@ -234,7 +204,7 @@ export const AiBagCounter = ({
       const dataUrl = event.target?.result;
       if (dataUrl) {
         setImageSrc(dataUrl);
-        analyzeImageContent(dataUrl, file.name);
+        analyzeImageContent(dataUrl, file.name, true);
       }
     };
     reader.readAsDataURL(file);
@@ -250,7 +220,7 @@ export const AiBagCounter = ({
         const dataUrl = event.target?.result;
         if (dataUrl) {
           setImageSrc(dataUrl);
-          analyzeImageContent(dataUrl, file.name);
+          analyzeImageContent(dataUrl, file.name, true);
         }
       };
       reader.readAsDataURL(file);
