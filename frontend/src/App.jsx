@@ -147,7 +147,7 @@ export default function App() {
                 </Button>
               </div>
               <Card className="p-5 sm:p-8 bg-white border border-slate-200 shadow-sm rounded-3xl">
-                <AiBagCounter initialImage="/cement-5-bags.jpg" />
+                <AiBagCounter />
               </Card>
             </div>
           )}

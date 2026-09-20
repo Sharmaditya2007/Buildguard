@@ -5,6 +5,8 @@ import { Badge } from '../ui/Badge';
 import {
   Camera,
   Upload,
+  UploadCloud,
+  ArrowLeft,
   Sparkles,
   CheckCircle2,
   AlertCircle,
@@ -23,33 +25,36 @@ import {
  * displaying real-time visual bounding boxes and confidence scores.
  */
 export const AiBagCounter = ({
-  initialImage = '/cement-5-bags.jpg',
+  initialImage = null,
   materialType = 'Cement Bags',
   onCountConfirmed,
   compact = false
 }) => {
-  const [imageSrc, setImageSrc] = useState(initialImage);
-  const [fileName, setFileName] = useState('5_Cement_Bags_Delivery.jpg');
+  const [imageSrc, setImageSrc] = useState(initialImage || null);
+  const [fileName, setFileName] = useState('');
   const [analyzing, setAnalyzing] = useState(false);
-  const [detectedCount, setDetectedCount] = useState(5);
-  const [confidence, setConfidence] = useState(98);
-  const [layersCount, setLayersCount] = useState({ rows: 4, cols: 1, depth: 1 });
-  const [boundingBoxes, setBoundingBoxes] = useState([
-    { id: 1, left: 27, top: 64, width: 32, height: 18, label: 'Bag #1 (Bottom flat)', confidence: '98.5' },
-    { id: 2, left: 28, top: 50, width: 31, height: 16, label: 'Bag #2 (Layer 2)', confidence: '98.2' },
-    { id: 3, left: 31, top: 38, width: 28, height: 14, label: 'Bag #3 (Layer 3)', confidence: '97.8' },
-    { id: 4, left: 30, top: 24, width: 28, height: 15, label: 'Bag #4 (Top flat)', confidence: '98.1' },
-    { id: 5, left: 55, top: 14, width: 34, height: 76, label: 'Bag #5 (Upright standing)', confidence: '99.0' },
-  ]);
+  const [detectedCount, setDetectedCount] = useState(0);
+  const [confidence, setConfidence] = useState(0);
+  const [layersCount, setLayersCount] = useState({ rows: 0, cols: 0, depth: 0 });
+  const [boundingBoxes, setBoundingBoxes] = useState([]);
   const [showBoxes, setShowBoxes] = useState(true);
   const [hoveredBoxId, setHoveredBoxId] = useState(null);
-  const [analysisSummary, setAnalysisSummary] = useState(
-    'Discrete Delivery Detected: Exactly 5 cement bags counted (4 stacked horizontally on left + 1 upright bag on right) with 98% confidence.'
-  );
+  const [analysisSummary, setAnalysisSummary] = useState('');
   
   const fileInputRef = useRef(null);
   const cameraInputRef = useRef(null);
   const imageRef = useRef(null);
+
+  const handleReset = () => {
+    setImageSrc(null);
+    setFileName('');
+    setAnalyzing(false);
+    setDetectedCount(0);
+    setConfidence(0);
+    setBoundingBoxes([]);
+    setAnalysisSummary('');
+    setHoveredBoxId(null);
+  };
 
   // Analyze image on upload or sample select
   const analyzeImageContent = (src, customName = '', isUserUpload = false) => {
@@ -205,12 +210,13 @@ export const AiBagCounter = ({
     };
   };
 
-  // Run initial analysis on load
+  // Run initial analysis on load ONLY if initialImage was provided
   useEffect(() => {
-    if (imageSrc) {
-      analyzeImageContent(imageSrc);
+    if (initialImage) {
+      setImageSrc(initialImage);
+      analyzeImageContent(initialImage, 'Initial_Delivery.jpg', true);
     }
-  }, []);
+  }, [initialImage]);
 
   // Handle local user file upload (from desktop, camera, or phone)
   const handleFileChange = (e) => {
@@ -256,57 +262,134 @@ export const AiBagCounter = ({
 
   return (
     <div className="space-y-4">
-      {/* Upload Drop Zone & Action Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <label className="block text-sm md:text-base font-bold text-slate-900">
-            Delivery Image & AI Bag Counter
-          </label>
-          <p className="text-xs text-slate-500">
-            Upload your site photo, click camera, or select a sample to watch the AI count visible bags.
+      {/* Hidden file and camera inputs */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+      <input
+        type="file"
+        ref={cameraInputRef}
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+
+      {!imageSrc ? (
+        /* State 1: Clean Upload Dropzone when no image is uploaded yet */
+        <div
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+          className="border-3 border-dashed border-amber-300/90 hover:border-amber-500 bg-amber-50/40 hover:bg-amber-50/80 rounded-3xl p-8 sm:p-14 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group select-none shadow-xs"
+        >
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-amber-500/20 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-105 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all shadow-sm">
+            <UploadCloud className="w-8 h-8 sm:w-10 sm:h-10" />
+          </div>
+
+          <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-900">
+            Upload Image to Check Bags
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1.5 max-w-md leading-relaxed">
+            Click here to choose a photo from your PC or phone, or drag and drop your delivery photo directly.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+            <Button
+              variant="brand"
+              size="lg"
+              icon={Upload}
+              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none shadow-md cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
+            >
+              Upload Photo from PC
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              icon={Camera}
+              className="bg-white border-slate-300 font-bold text-slate-800 hover:bg-slate-50 cursor-pointer"
+              onClick={(e) => {
+                e.stopPropagation();
+                cameraInputRef.current?.click();
+              }}
+            >
+              Take Camera Photo
+            </Button>
+          </div>
+
+          <div className="mt-8 pt-5 border-t border-amber-200/80 w-full max-w-lg">
+            <span className="text-xs font-bold text-slate-500 block mb-2.5">
+              Or test with a sample photo:
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setImageSrc('/cement-5-bags.jpg');
+                  analyzeImageContent('/cement-5-bags.jpg', '5_Cement_Bags_Delivery.jpg', true);
+                }}
+                className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold rounded-xl shadow-xs transition cursor-pointer"
+              >
+                ⭐ 5 Bags Photo Sample
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setImageSrc('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60');
+                  analyzeImageContent('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60', 'Cement_Pallet_150.jpg', false);
+                }}
+                className="px-3.5 py-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium rounded-xl shadow-2xs transition cursor-pointer"
+              >
+                Pallet (150 Bags)
+              </button>
+            </div>
+          </div>
         </div>
+      ) : (
+        /* State 2: Shown ONLY AFTER uploading the image */
+        <div className="space-y-4 animate-in fade-in duration-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-600 block">
+                Analysis Complete
+              </span>
+              <h4 className="text-sm font-bold text-slate-900 truncate max-w-sm">
+                {fileName || 'Uploaded Delivery Photo'}
+              </h4>
+            </div>
 
-        <div className="flex items-center gap-2">
-          {/* File picker for desktop & gallery */}
-          <input
-            type="file"
-            ref={fileInputRef}
-            accept="image/*"
-            className="hidden"
-            onChange={handleFileChange}
-          />
-          {/* Direct camera capture for mobile devices */}
-          <input
-            type="file"
-            ref={cameraInputRef}
-            accept="image/*"
-            capture="environment"
-            className="hidden"
-            onChange={handleFileChange}
-          />
-
-          <Button
-            variant="brand"
-            size="sm"
-            icon={Upload}
-            onClick={() => fileInputRef.current?.click()}
-            className="shadow-sm cursor-pointer font-bold"
-          >
-            Upload Photo
-          </Button>
-
-          <Button
-            variant="outline"
-            size="sm"
-            icon={Camera}
-            onClick={() => cameraInputRef.current?.click()}
-            className="cursor-pointer"
-          >
-            Camera
-          </Button>
-        </div>
-      </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                icon={ArrowLeft}
+                onClick={handleReset}
+                className="cursor-pointer font-semibold text-slate-700 hover:bg-white"
+              >
+                Upload Different Image
+              </Button>
+              <Button
+                variant="brand"
+                size="sm"
+                icon={Upload}
+                onClick={() => fileInputRef.current?.click()}
+                className="shadow-sm cursor-pointer font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 border-none"
+              >
+                Upload New
+              </Button>
+            </div>
+          </div>
 
       {/* Main Visual Preview Area with AI Bounding Boxes */}
       <div
@@ -574,6 +657,8 @@ export const AiBagCounter = ({
           </div>
         )}
       </Card>
+        </div>
+      )}
     </div>
   );
 };
