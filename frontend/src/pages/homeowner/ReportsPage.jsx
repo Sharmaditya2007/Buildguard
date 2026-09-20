@@ -99,10 +99,10 @@ export const ReportsPage = () => {
       {/* Header & Export Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 dark:text-white">
             Project Transparency Audit Report
           </h1>
-          <p className="text-sm md:text-base text-slate-500 mt-0.5">
+          <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-0.5">
             Verified materials, structural progress logs, and AI audit history.
           </p>
         </div>
@@ -113,6 +113,7 @@ export const ReportsPage = () => {
             size="md"
             icon={Printer}
             onClick={handlePrint}
+            className="dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700"
           >
             Print
           </Button>
@@ -121,6 +122,7 @@ export const ReportsPage = () => {
             size="md"
             icon={Download}
             onClick={handlePrint}
+            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none"
           >
             Export PDF
           </Button>
@@ -128,77 +130,77 @@ export const ReportsPage = () => {
       </div>
 
       {/* Formal Audit Document Card */}
-      <Card className="p-6 md:p-10 space-y-8 bg-white border border-slate-200">
+      <Card className="p-6 md:p-10 space-y-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
         {/* Document Header */}
-        <div className="flex items-start justify-between border-b pb-6 border-slate-200 gap-4">
+        <div className="flex items-start justify-between border-b pb-6 border-slate-200 dark:border-slate-800 gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-heading font-extrabold text-2xl text-slate-900">
-                BuildGuard<span className="text-amber-600">AI</span>
+              <span className="font-heading font-extrabold text-2xl text-slate-900 dark:text-white">
+                BuildGuard<span className="text-amber-500">AI</span>
               </span>
               <Badge variant="verified" size="sm" icon={ShieldCheck}>
                 Certified Audit
               </Badge>
             </div>
-            <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-bold">
+            <p className="text-xs text-slate-400 dark:text-slate-500 mt-1 uppercase tracking-wider font-bold">
               Independent Civil Verification Ledger
             </p>
           </div>
 
-          <div className="text-right text-xs text-slate-500 space-y-0.5">
-            <p className="font-bold text-slate-800">Report ID: BG-2026-VILLA-B4</p>
+          <div className="text-right text-xs text-slate-500 dark:text-slate-400 space-y-0.5">
+            <p className="font-bold text-slate-800 dark:text-slate-200">Report ID: BG-2026-VILLA-B4</p>
             <p>Generated on: {new Date().toLocaleDateString()}</p>
             <p>Status: Active Construction</p>
           </div>
         </div>
 
         {/* Project Metadata Table */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200/80 text-xs md:text-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-xs md:text-sm">
           <div>
-            <span className="text-slate-400 block font-bold text-[11px] uppercase">Project Name</span>
-            <span className="font-bold text-slate-900">{data.projectName}</span>
+            <span className="text-slate-400 dark:text-slate-500 block font-bold text-[11px] uppercase">Project Name</span>
+            <span className="font-bold text-slate-900 dark:text-white">{data.projectName}</span>
           </div>
           <div>
-            <span className="text-slate-400 block font-bold text-[11px] uppercase">Built-Up Area</span>
-            <span className="font-bold text-slate-900">2,400 Sqft</span>
+            <span className="text-slate-400 dark:text-slate-500 block font-bold text-[11px] uppercase">Built-Up Area</span>
+            <span className="font-bold text-slate-900 dark:text-white">2,400 Sqft</span>
           </div>
           <div>
-            <span className="text-slate-400 block font-bold text-[11px] uppercase">Current Milestone</span>
-            <span className="font-bold text-amber-700">{data.currentStage} ({data.completionPercentage}%)</span>
+            <span className="text-slate-400 dark:text-slate-500 block font-bold text-[11px] uppercase">Current Milestone</span>
+            <span className="font-bold text-amber-600 dark:text-amber-400">{data.currentStage} ({data.completionPercentage}%)</span>
           </div>
           <div>
-            <span className="text-slate-400 block font-bold text-[11px] uppercase">Contractor</span>
-            <span className="font-bold text-slate-900">{data.contractor}</span>
+            <span className="text-slate-400 dark:text-slate-500 block font-bold text-[11px] uppercase">Contractor</span>
+            <span className="font-bold text-slate-900 dark:text-white">{data.contractor}</span>
           </div>
         </div>
 
         {/* Audit Summary Metrics */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl border border-slate-200 text-center space-y-1">
-            <span className="text-xs text-slate-500 font-bold uppercase">Material Integrity Score</span>
-            <p className="text-3xl font-extrabold text-emerald-600">{data.trustScore}%</p>
-            <span className="text-xs text-slate-400">{data.verifiedDeliveries} of {data.totalDeliveries} deliveries verified</span>
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center space-y-1">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">Material Integrity Score</span>
+            <p className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400">{data.trustScore}%</p>
+            <span className="text-xs text-slate-400 dark:text-slate-500">{data.verifiedDeliveries} of {data.totalDeliveries} deliveries verified</span>
           </div>
-          <div className="p-4 rounded-xl border border-slate-200 text-center space-y-1">
-            <span className="text-xs text-slate-500 font-bold uppercase">Total Materials Logged</span>
-            <p className="text-3xl font-extrabold text-slate-900">{data.totalDeliveries}</p>
-            <span className="text-xs text-slate-400">Photographic proof recorded</span>
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center space-y-1">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">Total Materials Logged</span>
+            <p className="text-3xl font-extrabold text-slate-900 dark:text-white">{data.totalDeliveries}</p>
+            <span className="text-xs text-slate-400 dark:text-slate-500">Photographic proof recorded</span>
           </div>
-          <div className="p-4 rounded-xl border border-slate-200 text-center space-y-1">
-            <span className="text-xs text-slate-500 font-bold uppercase">Site Stage Completion</span>
-            <p className="text-3xl font-extrabold text-amber-600">{data.completionPercentage}%</p>
-            <span className="text-xs text-slate-400">{data.currentStage} in progress</span>
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center space-y-1">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase">Site Stage Completion</span>
+            <p className="text-3xl font-extrabold text-amber-600 dark:text-amber-400">{data.completionPercentage}%</p>
+            <span className="text-xs text-slate-400 dark:text-slate-500">{data.currentStage} in progress</span>
           </div>
         </div>
 
         {/* Verified Materials Breakdown Table */}
         <div className="space-y-3">
-          <h3 className="text-base md:text-lg font-bold text-slate-900">
+          <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">
             Material Audit Ledger
           </h3>
-          <div className="overflow-x-auto border border-slate-200 rounded-xl">
+          <div className="overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-xl">
             <table className="w-full text-left text-xs md:text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200 font-bold text-slate-600">
+              <thead className="bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-750 font-bold text-slate-600 dark:text-slate-300">
                 <tr>
                   <th className="p-3">Material Description</th>
                   <th className="p-3">Declared Qty</th>
@@ -206,10 +208,10 @@ export const ReportsPage = () => {
                   <th className="p-3">Logged Date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
                 {data.materialsList.map((m, idx) => (
                   <tr key={idx}>
-                    <td className="p-3 font-semibold text-slate-900">{m.materialType}</td>
+                    <td className="p-3 font-semibold text-slate-900 dark:text-white">{m.materialType}</td>
                     <td className="p-3">{m.quantity}</td>
                     <td className="p-3">
                       {m.status === 'Verified' ? (
@@ -227,9 +229,9 @@ export const ReportsPage = () => {
         </div>
 
         {/* Verification Sign-Off Footer */}
-        <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+        <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 dark:text-slate-500 gap-4">
           <div className="flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+            <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
             <span>Digital ledger signed by BuildGuard AI Transparency Engine</span>
           </div>
           <div className="text-right">

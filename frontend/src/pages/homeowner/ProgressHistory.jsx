@@ -80,10 +80,10 @@ export const ProgressHistory = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 dark:text-white">
           Construction Progress Timeline
         </h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1">
+        <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-1">
           Visual record of your home's structural evolution from ground-breaking to completion.
         </p>
       </div>
@@ -92,8 +92,8 @@ export const ProgressHistory = () => {
       <Card className="p-5 md:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Layers className="w-5 h-5 text-amber-600" />
-            <h3 className="font-bold text-slate-900 text-lg">Milestone Journey</h3>
+            <Layers className="w-5 h-5 text-amber-500" />
+            <h3 className="font-bold text-slate-900 dark:text-white text-lg">Milestone Journey</h3>
           </div>
           <Badge variant="brand" size="md">Overall ~45% Complete</Badge>
         </div>
@@ -105,16 +105,16 @@ export const ProgressHistory = () => {
               key={st.name}
               className={`p-3 rounded-xl border flex flex-col justify-between transition-all ${
                 st.done
-                  ? 'bg-emerald-50/70 border-emerald-200 text-emerald-900'
+                  ? 'bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800/40 text-emerald-900 dark:text-emerald-300'
                   : st.active
-                  ? 'bg-amber-50 border-amber-400 text-amber-950 ring-2 ring-amber-200 shadow-sm'
-                  : 'bg-slate-50 border-slate-200 text-slate-400'
+                  ? 'bg-amber-50 dark:bg-amber-950/50 border-amber-400 dark:border-amber-500 text-amber-950 dark:text-amber-300 ring-2 ring-amber-200 dark:ring-amber-800/40 shadow-sm'
+                  : 'bg-slate-50 dark:bg-slate-850 border-slate-200 dark:border-slate-800 text-slate-400 dark:text-slate-500'
               }`}
             >
               <div className="flex items-center justify-between text-xs mb-1">
                 <span className="font-bold">Step {i + 1}</span>
-                {st.done && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />}
-                {st.active && <TrendingUp className="w-3.5 h-3.5 text-amber-600" />}
+                {st.done && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
+                {st.active && <TrendingUp className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />}
               </div>
               <span className="text-xs md:text-sm font-extrabold truncate">{st.name}</span>
             </div>
@@ -124,23 +124,23 @@ export const ProgressHistory = () => {
 
       {/* Chronological Progress Log Entries */}
       <div className="space-y-4">
-        <h3 className="text-lg md:text-xl font-bold text-slate-900 font-heading">
+        <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white font-heading">
           Site Photo Updates ({updates.length})
         </h3>
 
         <div className="space-y-4">
           {updates.map((update) => (
             <Card key={update.id} className="p-5 md:p-6 space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-2.5">
-                  <Badge variant="neutral" size="md" className="font-bold text-slate-900">
+                  <Badge variant="neutral" size="md" className="font-bold">
                     {update.stage}
                   </Badge>
-                  <span className="text-sm font-extrabold text-amber-700">
+                  <span className="text-sm font-extrabold text-amber-700 dark:text-amber-400">
                     {update.progressPercentage}% Complete
                   </span>
                 </div>
-                <span className="text-xs md:text-sm text-slate-400 flex items-center gap-1 font-medium">
+                <span className="text-xs md:text-sm text-slate-400 dark:text-slate-500 flex items-center gap-1 font-medium">
                   <Calendar className="w-4 h-4" />
                   {new Date(update.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}
                 </span>
@@ -148,18 +148,18 @@ export const ProgressHistory = () => {
 
               {/* Contractor notes & AI Summary */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
-                  <span className="font-bold text-slate-800 block text-xs uppercase tracking-wider mb-1">
+                <div className="bg-slate-50 dark:bg-slate-850 p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800">
+                  <span className="font-bold text-slate-800 dark:text-slate-200 block text-xs uppercase tracking-wider mb-1">
                     Contractor Site Note:
                   </span>
-                  <p className="text-slate-600">{update.notes}</p>
+                  <p className="text-slate-600 dark:text-slate-300">{update.notes}</p>
                 </div>
 
-                <div className="bg-amber-50/70 p-3.5 rounded-xl border border-amber-200">
-                  <span className="font-bold text-amber-900 block text-xs uppercase tracking-wider mb-1">
+                <div className="bg-amber-50/70 dark:bg-amber-950/30 p-3.5 rounded-xl border border-amber-200 dark:border-amber-800/40">
+                  <span className="font-bold text-amber-900 dark:text-amber-300 block text-xs uppercase tracking-wider mb-1">
                     AI Vision Analysis:
                   </span>
-                  <p className="text-amber-800">{update.aiSummary}</p>
+                  <p className="text-amber-800 dark:text-amber-200">{update.aiSummary}</p>
                 </div>
               </div>
 

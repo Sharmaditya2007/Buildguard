@@ -98,10 +98,10 @@ export const MaterialHistory = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 dark:text-white">
           Material Delivery History
         </h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1">
+        <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-1">
           Every building supply logged on-site with photographic proof & computer vision audits.
         </p>
       </div>
@@ -125,8 +125,8 @@ export const MaterialHistory = () => {
               onClick={() => setStatusFilter('ALL')}
               className={`px-3 py-2 rounded-xl text-xs md:text-sm font-bold transition-all cursor-pointer ${
                 statusFilter === 'ALL'
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-slate-900 dark:bg-amber-500 text-white dark:text-slate-950 font-bold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
             >
               All ({materials.length})
@@ -136,8 +136,8 @@ export const MaterialHistory = () => {
               onClick={() => setStatusFilter('VERIFIED')}
               className={`px-3 py-2 rounded-xl text-xs md:text-sm font-bold transition-all cursor-pointer ${
                 statusFilter === 'VERIFIED'
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-emerald-600 dark:bg-emerald-500 text-white dark:text-slate-950 font-bold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
             >
               Verified
@@ -147,8 +147,8 @@ export const MaterialHistory = () => {
               onClick={() => setStatusFilter('DISCREPANCY')}
               className={`px-3 py-2 rounded-xl text-xs md:text-sm font-bold transition-all cursor-pointer ${
                 statusFilter === 'DISCREPANCY'
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-amber-600 dark:bg-amber-500 text-white dark:text-slate-950 font-bold'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
               }`}
             >
               Notes / Variations
@@ -160,9 +160,9 @@ export const MaterialHistory = () => {
       {/* Material Delivery Grid */}
       {filteredMaterials.length === 0 ? (
         <Card className="text-center py-12 space-y-3">
-          <PackageCheck className="w-12 h-12 text-slate-300 mx-auto" />
-          <h3 className="text-lg font-bold text-slate-800">No matching deliveries found</h3>
-          <p className="text-sm text-slate-500">Try adjusting your search or filter keywords.</p>
+          <PackageCheck className="w-12 h-12 text-slate-300 dark:text-slate-600 mx-auto" />
+          <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">No matching deliveries found</h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">Try adjusting your search or filter keywords.</p>
         </Card>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -183,8 +183,8 @@ export const MaterialHistory = () => {
       )}
 
       {/* Pagination Controls */}
-      <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-        <span className="text-sm text-slate-500 font-medium">
+      <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
+        <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">
           Showing {filteredMaterials.length} deliveries (Page {page})
         </span>
 

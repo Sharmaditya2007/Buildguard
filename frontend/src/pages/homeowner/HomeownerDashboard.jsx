@@ -137,19 +137,19 @@ export const HomeownerDashboard = ({ onNavigate }) => {
       </div>
 
       {/* Upload Image to Check - AI Bag Counter Banner */}
-      <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-white border-2 border-amber-400/50 rounded-3xl p-5 md:p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-amber-500/15 via-amber-500/5 to-slate-900 border-2 border-amber-500/40 dark:border-amber-500/30 rounded-3xl p-5 md:p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold flex-shrink-0 shadow-md">
             <Camera className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-lg md:text-xl font-bold font-heading text-slate-900">
+              <h3 className="text-lg md:text-xl font-bold font-heading text-slate-900 dark:text-white">
                 Upload Image to Check
               </h3>
               <Badge variant="brand" size="sm">AI Bag Counter</Badge>
             </div>
-            <p className="text-sm text-slate-600 mt-1 max-w-xl">
+            <p className="text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-xl">
               Upload any delivery photo or cement bags picture to automatically detect, count, and audit bags with computer vision bounding boxes.
             </p>
           </div>
@@ -177,7 +177,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
           <Button
             variant={showInlineScanner ? 'outline' : 'secondary'}
             size="md"
-            className="cursor-pointer"
+            className="cursor-pointer dark:bg-slate-800 dark:text-slate-200 dark:border-slate-750"
             onClick={() => setShowInlineScanner(!showInlineScanner)}
           >
             {showInlineScanner ? 'Hide Scanner' : 'Quick Preview'}
@@ -186,10 +186,10 @@ export const HomeownerDashboard = ({ onNavigate }) => {
           <Button
             variant="primary"
             size="md"
-            className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold border-none shadow-md cursor-pointer"
+            className="flex items-center justify-center gap-2 bg-slate-900 dark:bg-amber-500 hover:bg-slate-800 dark:hover:bg-amber-400 text-white dark:text-slate-950 font-bold border-none shadow-md cursor-pointer"
             onClick={() => onNavigate('check-image')}
           >
-            <Camera className="w-5 h-5 text-amber-400" />
+            <Camera className="w-5 h-5 text-amber-400 dark:text-slate-950" />
             Full Screen
             <ArrowRight className="w-4 h-4 ml-1" />
           </Button>
@@ -198,9 +198,9 @@ export const HomeownerDashboard = ({ onNavigate }) => {
 
       {/* Inline AI Bag Counter Expandable */}
       {showInlineScanner && (
-        <Card className="p-5 sm:p-7 bg-white border-2 border-amber-400/70 shadow-lg rounded-3xl animate-in fade-in duration-200">
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-            <h4 className="font-bold text-slate-900 flex items-center gap-2 text-base md:text-lg">
+        <Card className="p-5 sm:p-7 bg-white dark:bg-slate-900 border-2 border-amber-400/70 dark:border-amber-500/40 shadow-lg rounded-3xl animate-in fade-in duration-200">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+            <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-base md:text-lg">
               <Camera className="w-5 h-5 text-amber-500" />
               Direct AI Bag Counter & Visual Check
             </h4>
@@ -208,7 +208,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
               variant="ghost"
               size="sm"
               onClick={() => setShowInlineScanner(false)}
-              className="cursor-pointer text-slate-500 hover:text-slate-800"
+              className="cursor-pointer text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white"
             >
               ✕ Close
             </Button>
@@ -275,7 +275,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
 
       {/* WhatsApp-Style Large Quick Actions */}
       <div className="space-y-3">
-        <h3 className="text-lg md:text-xl font-bold text-slate-900 font-heading">
+        <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white font-heading">
           Quick Actions
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -296,7 +296,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
             title="Site Photos Timeline"
             subtitle="Visual proof of structural progress"
             icon={TrendingUp}
-            iconBg="bg-emerald-100 text-emerald-800"
+            iconBg="bg-emerald-100 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300"
             onClick={() => onNavigate('progress')}
           />
           <QuickActionTile
@@ -304,7 +304,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
             subtitle="Review requisitions & quantities"
             icon={AlertTriangle}
             badge={data.pendingRequests > 0 ? <Badge variant="warning" size="sm">1 New</Badge> : null}
-            iconBg="bg-amber-100 text-amber-900"
+            iconBg="bg-amber-100 dark:bg-amber-950/50 text-amber-900 dark:text-amber-300"
             onClick={() => onNavigate('alerts')}
           />
         </div>
@@ -313,12 +313,12 @@ export const HomeownerDashboard = ({ onNavigate }) => {
       {/* Recent Delivery Photos Reel */}
       <div className="space-y-3 pt-2">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg md:text-xl font-bold text-slate-900 font-heading">
+          <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white font-heading">
             Recent Delivery Audits
           </h3>
           <button
             onClick={() => onNavigate('materials')}
-            className="text-sm font-bold text-amber-700 hover:text-amber-800 flex items-center gap-1 cursor-pointer"
+            className="text-sm font-bold text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 flex items-center gap-1 cursor-pointer"
           >
             See all ({data.totalDeliveries}) <ArrowRight className="w-4 h-4" />
           </button>

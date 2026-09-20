@@ -58,7 +58,7 @@ export const AiAlertsPage = () => {
       {/* Header */}
       <div>
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+          <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900 dark:text-white">
             AI Transparency Alerts & Reviews
           </h1>
           {pendingCount > 0 && (
@@ -67,16 +67,16 @@ export const AiAlertsPage = () => {
             </Badge>
           )}
         </div>
-        <p className="text-sm md:text-base text-slate-500 mt-1">
+        <p className="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-1">
           Calm, independent civil engineering observations designed to prevent waste and billing misunderstandings.
         </p>
       </div>
 
       {/* Reassurance Banner */}
-      <Card className="p-4 bg-emerald-50/70 border-emerald-200 flex items-start gap-3">
-        <ShieldCheck className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-0.5" />
-        <div className="text-xs md:text-sm text-emerald-950 leading-relaxed">
-          <span className="font-bold block">Objective Assistance Guarantee</span>
+      <Card className="p-4 bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800/50 flex items-start gap-3">
+        <ShieldCheck className="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+        <div className="text-xs md:text-sm text-emerald-950 dark:text-emerald-200 leading-relaxed">
+          <span className="font-bold block text-emerald-900 dark:text-emerald-300">Objective Assistance Guarantee</span>
           BuildGuard AI reports visual observations and consumption guidelines neutrally. We never accuse contractors of theft or misconduct, ensuring cooperative problem solving on your project.
         </div>
       </Card>
@@ -86,8 +86,8 @@ export const AiAlertsPage = () => {
         {alerts.length === 0 ? (
           <Card className="text-center py-12 space-y-3">
             <CheckCircle2 className="w-12 h-12 text-emerald-500 mx-auto" />
-            <h3 className="text-lg font-bold text-slate-800">All clear! No active alerts</h3>
-            <p className="text-sm text-slate-500">All deliveries and material orders are currently aligned.</p>
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">All clear! No active alerts</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400">All deliveries and material orders are currently aligned.</p>
           </Card>
         ) : (
           alerts.map(alert => (

@@ -285,16 +285,16 @@ export const AiBagCounter = ({
           onDragOver={(e) => e.preventDefault()}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className="border-3 border-dashed border-amber-300/90 hover:border-amber-500 bg-amber-50/40 hover:bg-amber-50/80 rounded-3xl p-8 sm:p-14 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group select-none shadow-xs"
+          className="border-3 border-dashed border-amber-300/80 dark:border-amber-500/30 hover:border-amber-500 dark:hover:border-amber-400 bg-amber-50/40 dark:bg-slate-900/40 hover:bg-amber-50/80 dark:hover:bg-slate-900/70 rounded-3xl p-8 sm:p-14 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 group select-none shadow-xs"
         >
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-amber-500/20 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-105 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all shadow-sm">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 group-hover:scale-105 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all shadow-sm">
             <UploadCloud className="w-8 h-8 sm:w-10 sm:h-10" />
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-900">
+          <h3 className="text-xl sm:text-2xl font-heading font-extrabold text-slate-900 dark:text-white">
             Upload Image to Check Bags
           </h3>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1.5 max-w-md leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5 max-w-md leading-relaxed">
             Click here to choose a photo from your PC or phone, or drag and drop your delivery photo directly.
           </p>
 
@@ -316,7 +316,7 @@ export const AiBagCounter = ({
               variant="outline"
               size="lg"
               icon={Camera}
-              className="bg-white border-slate-300 font-bold text-slate-800 hover:bg-slate-50 cursor-pointer"
+              className="bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 font-bold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 cameraInputRef.current?.click();
@@ -326,20 +326,20 @@ export const AiBagCounter = ({
             </Button>
           </div>
 
-          <p className="text-xs text-slate-400 mt-6 flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 inline" />
+          <p className="text-xs text-slate-400 dark:text-slate-500 mt-6 flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" />
             Supports JPG, PNG, WEBP delivery photos directly from your phone camera or computer.
           </p>
         </div>
       ) : (
         /* State 2: Shown ONLY AFTER uploading the image */
         <div className="space-y-4 animate-in fade-in duration-200">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-850 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-600 block">
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block">
                 Analysis Complete
               </span>
-              <h4 className="text-sm font-bold text-slate-900 truncate max-w-sm">
+              <h4 className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-sm">
                 {fileName || 'Uploaded Delivery Photo'}
               </h4>
             </div>
@@ -350,7 +350,7 @@ export const AiBagCounter = ({
                 size="sm"
                 icon={ArrowLeft}
                 onClick={handleReset}
-                className="cursor-pointer font-semibold text-slate-700 hover:bg-white"
+                className="cursor-pointer font-semibold text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700"
               >
                 Upload Different Image
               </Button>
@@ -481,17 +481,17 @@ export const AiBagCounter = ({
       </div>
 
       {/* AI Count Summary Card */}
-      <Card className="p-4 sm:p-5 bg-amber-50/70 border-amber-200 space-y-3">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-200/80 pb-3">
+      <Card className="p-4 sm:p-5 bg-amber-50/70 dark:bg-slate-900/90 border-amber-200 dark:border-slate-800 space-y-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-200/80 dark:border-slate-800 pb-3">
           <div>
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-amber-900 block">
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-amber-900 dark:text-amber-400 block">
               AI Verification Result
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-900">
+              <span className="text-3xl sm:text-4xl font-heading font-extrabold text-slate-900 dark:text-white">
                 {detectedCount}
               </span>
-              <span className="text-base sm:text-lg font-bold text-slate-700">
+              <span className="text-base sm:text-lg font-bold text-slate-700 dark:text-slate-300">
                 Bags Detected
               </span>
               <Badge variant="verified" size="sm" className="ml-2">
@@ -501,32 +501,32 @@ export const AiBagCounter = ({
           </div>
 
           {/* Quick Increment/Decrement Calibrator */}
-          <div className="flex items-center gap-1.5 self-start sm:self-center bg-white p-1 rounded-xl border border-amber-300 shadow-xs">
-            <span className="text-xs text-slate-500 font-bold px-2">Calibrate:</span>
+          <div className="flex items-center gap-1.5 self-start sm:self-center bg-white dark:bg-slate-800 p-1 rounded-xl border border-amber-300 dark:border-slate-700 shadow-xs">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-bold px-2">Calibrate:</span>
             <button
               onClick={() => adjustCount(-5)}
-              className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center font-bold text-sm transition cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 flex items-center justify-center font-bold text-sm transition cursor-pointer"
               title="Subtract 5 bags"
             >
               -5
             </button>
             <button
               onClick={() => adjustCount(-1)}
-              className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 flex items-center justify-center transition cursor-pointer"
               title="Subtract 1 bag"
             >
               <Minus className="w-4 h-4" />
             </button>
             <button
               onClick={() => adjustCount(1)}
-              className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center transition cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 flex items-center justify-center transition cursor-pointer"
               title="Add 1 bag"
             >
               <Plus className="w-4 h-4" />
             </button>
             <button
               onClick={() => adjustCount(5)}
-              className="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 flex items-center justify-center font-bold text-sm transition cursor-pointer"
+              className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 flex items-center justify-center font-bold text-sm transition cursor-pointer"
               title="Add 5 bags"
             >
               +5
@@ -535,24 +535,24 @@ export const AiBagCounter = ({
         </div>
 
         {/* Detailed Breakdown */}
-        <div className="text-xs md:text-sm text-slate-700 space-y-1">
-          <p className="font-semibold text-slate-900">
+        <div className="text-xs md:text-sm text-slate-700 dark:text-slate-300 space-y-1">
+          <p className="font-semibold text-slate-900 dark:text-white">
             {analysisSummary}
           </p>
-          <p className="text-slate-500">
+          <p className="text-slate-500 dark:text-slate-400">
             Grid geometry: {layersCount.rows} tiers × {layersCount.cols} columns on front face (~{layersCount.depth} deep layers).
           </p>
         </div>
 
         {/* "How They Are 5 Bags" Visual Layer Breakdown Section */}
         {detectedCount === 5 && (
-          <div className="pt-3 border-t border-amber-200/80 space-y-3">
+          <div className="pt-3 border-t border-amber-200/80 dark:border-slate-800 space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
-              <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-amber-950 flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-amber-950 dark:text-amber-300 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
                 How They Are 5 Bags (AI Visual Breakdown):
               </span>
-              <span className="text-xs font-bold text-amber-900 bg-amber-200/90 px-2.5 py-1 rounded-full border border-amber-300 shadow-2xs self-start sm:self-auto">
+              <span className="text-xs font-bold text-amber-900 dark:text-amber-300 bg-amber-200/90 dark:bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-300 dark:border-amber-800/60 shadow-2xs self-start sm:self-auto">
                 4 Stacked Flat + 1 Standing Upright = 5 Bags
               </span>
             </div>
@@ -575,7 +575,7 @@ export const AiBagCounter = ({
                     className={`p-2.5 rounded-xl border transition-all cursor-pointer text-left ${
                       isSelected
                         ? 'bg-amber-500 text-slate-950 border-amber-600 ring-2 ring-amber-400 shadow-md scale-[1.03]'
-                        : 'bg-white border-amber-300/80 hover:bg-amber-100/70 text-slate-800 shadow-2xs'
+                        : 'bg-white dark:bg-slate-800 border-amber-300/80 dark:border-slate-700 hover:bg-amber-100/70 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-100 shadow-2xs'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -584,8 +584,8 @@ export const AiBagCounter = ({
                       </span>
                       <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded ${
                         item.id === 5
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-amber-100 text-amber-900'
+                          ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
+                          : 'bg-amber-100 dark:bg-amber-950 text-amber-900 dark:text-amber-300'
                       }`}>
                         {item.id === 5 ? 'Upright' : 'Flat'}
                       </span>
@@ -597,8 +597,8 @@ export const AiBagCounter = ({
               })}
             </div>
 
-            <p className="text-xs text-amber-900/90 bg-white/80 p-3 rounded-xl border border-amber-200 leading-relaxed font-medium">
-              💡 <span className="font-bold text-amber-950">Verification Logic:</span> 4 bags are stacked horizontally flat on top of each other on the left stack (Bags #1, #2, #3, #4), and 1 separate bag stands vertically upright against them on the right side (Bag #5). All 5 bags have been individually verified with computer vision bounding boxes.
+            <p className="text-xs text-amber-900/90 dark:text-amber-200 bg-white/80 dark:bg-slate-800/80 p-3 rounded-xl border border-amber-200 dark:border-slate-700 leading-relaxed font-medium">
+              💡 <span className="font-bold text-amber-950 dark:text-amber-100">Verification Logic:</span> 4 bags are stacked horizontally flat on top of each other on the left stack (Bags #1, #2, #3, #4), and 1 separate bag stands vertically upright against them on the right side (Bag #5). All 5 bags have been individually verified with computer vision bounding boxes.
             </p>
           </div>
         )}

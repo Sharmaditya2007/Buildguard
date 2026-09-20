@@ -56,27 +56,27 @@ export const AiAlertCard = ({
 
       {/* Title & Description */}
       <div>
-        <h4 className="text-base md:text-lg font-bold text-slate-900 leading-snug">
+        <h4 className="text-base md:text-lg font-bold text-slate-900 dark:text-white leading-snug">
           {title}
         </h4>
-        <p className="text-sm md:text-base text-slate-600 mt-1 leading-relaxed">
+        <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
           {description}
         </p>
       </div>
 
       {/* Comparison Box (if available) */}
       {(declaredQuantity || aiEstimate) && (
-        <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 grid grid-cols-2 gap-3 text-xs md:text-sm">
+        <div className="bg-slate-50 dark:bg-slate-850 border border-slate-200/80 dark:border-slate-800 rounded-xl p-3 grid grid-cols-2 gap-3 text-xs md:text-sm">
           {declaredQuantity && (
             <div>
-              <span className="text-slate-400 block text-[11px] uppercase font-bold">Declared</span>
-              <span className="font-extrabold text-slate-800">{declaredQuantity}</span>
+              <span className="text-slate-400 dark:text-slate-500 block text-[11px] uppercase font-bold">Declared</span>
+              <span className="font-extrabold text-slate-800 dark:text-slate-200">{declaredQuantity}</span>
             </div>
           )}
           {aiEstimate && (
             <div>
-              <span className="text-slate-400 block text-[11px] uppercase font-bold">AI Estimate</span>
-              <span className="font-extrabold text-amber-700">{aiEstimate}</span>
+              <span className="text-slate-400 dark:text-slate-500 block text-[11px] uppercase font-bold">AI Estimate</span>
+              <span className="font-extrabold text-amber-700 dark:text-amber-400">{aiEstimate}</span>
             </div>
           )}
         </div>
@@ -99,7 +99,7 @@ export const AiAlertCard = ({
             variant="outline"
             size="md"
             icon={XCircle}
-            className="flex-1 text-rose-600 border-rose-200 hover:bg-rose-50 hover:border-rose-300"
+            className="flex-1 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800/80 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:border-rose-300 dark:hover:border-rose-700"
             loading={loading}
             onClick={handleReject}
           >
@@ -109,8 +109,8 @@ export const AiAlertCard = ({
       )}
 
       {actionState !== 'Pending' && (
-        <div className="pt-1 text-xs md:text-sm font-semibold text-slate-500">
-          Decision logged: <span className="font-bold text-slate-800">{actionState}</span>
+        <div className="pt-1 text-xs md:text-sm font-semibold text-slate-500 dark:text-slate-400">
+          Decision logged: <span className="font-bold text-slate-800 dark:text-white">{actionState}</span>
         </div>
       )}
     </Card>

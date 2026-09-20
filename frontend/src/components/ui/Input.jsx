@@ -18,7 +18,7 @@ export const Input = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm md:text-base font-semibold text-slate-800"
+          className="block text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200"
         >
           {label}
         </label>
@@ -26,7 +26,7 @@ export const Input = ({
 
       <div className="relative flex items-center">
         {Icon && (
-          <div className="absolute left-3.5 text-slate-400 pointer-events-none">
+          <div className="absolute left-3.5 text-slate-400 dark:text-slate-500 pointer-events-none">
             <Icon className="w-5 h-5" />
           </div>
         )}
@@ -34,28 +34,28 @@ export const Input = ({
         <input
           id={inputId}
           type={type}
-          className={`w-full min-h-[50px] px-4 py-3 text-base md:text-lg text-slate-900 bg-white border-2 rounded-xl transition-colors
+          className={`w-full min-h-[50px] px-4 py-3 text-base md:text-lg text-slate-900 dark:text-white bg-white dark:bg-slate-900 border-2 rounded-xl transition-colors
             ${Icon ? 'pl-11' : ''}
             ${suffix ? 'pr-14' : ''}
             ${error
-              ? 'border-rose-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100'
-              : 'border-slate-200 hover:border-slate-300 focus:border-amber-500 focus:ring-4 focus:ring-amber-100'
+              ? 'border-rose-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 dark:focus:ring-rose-950/50'
+              : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-amber-500 dark:focus:border-amber-400 focus:ring-4 focus:ring-amber-100 dark:focus:ring-amber-950/40'
             }
-            focus:outline-none placeholder:text-slate-400 disabled:bg-slate-100 disabled:cursor-not-allowed ${className}`}
+            focus:outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500 disabled:bg-slate-100 dark:disabled:bg-slate-800 disabled:cursor-not-allowed ${className}`}
           {...props}
         />
 
         {suffix && (
-          <div className="absolute right-3.5 text-sm md:text-base font-medium text-slate-500 pointer-events-none select-none">
+          <div className="absolute right-3.5 text-sm md:text-base font-medium text-slate-500 dark:text-slate-400 pointer-events-none select-none">
             {suffix}
           </div>
         )}
       </div>
 
       {error ? (
-        <p className="text-sm font-medium text-rose-600 mt-1">{error}</p>
+        <p className="text-sm font-medium text-rose-600 dark:text-rose-400 mt-1">{error}</p>
       ) : helperText ? (
-        <p className="text-xs md:text-sm text-slate-500 mt-1">{helperText}</p>
+        <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">{helperText}</p>
       ) : null}
     </div>
   );
@@ -75,23 +75,23 @@ export const Select = ({
   return (
     <div className="w-full space-y-1.5">
       {label && (
-        <label htmlFor={inputId} className="block text-sm md:text-base font-semibold text-slate-800">
+        <label htmlFor={inputId} className="block text-sm md:text-base font-semibold text-slate-800 dark:text-slate-200">
           {label}
         </label>
       )}
 
       <select
         id={inputId}
-        className={`w-full min-h-[50px] px-4 py-3 text-base md:text-lg text-slate-900 bg-white border-2 rounded-xl transition-colors
+        className={`w-full min-h-[50px] px-4 py-3 text-base md:text-lg text-slate-900 dark:text-white bg-white dark:bg-slate-900 border-2 rounded-xl transition-colors
           ${error
-            ? 'border-rose-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100'
-            : 'border-slate-200 hover:border-slate-300 focus:border-amber-500 focus:ring-4 focus:ring-amber-100'
+            ? 'border-rose-400 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 dark:focus:ring-rose-950/50'
+            : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-amber-500 dark:focus:border-amber-400 focus:ring-4 focus:ring-amber-100 dark:focus:ring-amber-950/40'
           }
           focus:outline-none cursor-pointer ${className}`}
         {...props}
       >
         {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
+          <option key={opt.value} value={opt.value} className="dark:bg-slate-900 dark:text-white">
             {opt.label}
           </option>
         ))}
