@@ -82,6 +82,7 @@ export default function App() {
   // Homeowner Navigation Configuration
   const homeownerNav = [
     { id: 'dashboard', label: 'Home', icon: LayoutDashboard },
+    { id: 'check-image', label: 'Upload to Check', shortLabel: 'Check Image', icon: Camera },
     { id: 'materials', label: 'Materials', icon: PackageCheck },
     { id: 'progress', label: 'Progress', icon: TrendingUp },
     { id: 'alerts', label: 'Alerts', icon: AlertTriangle, badge: 1 },
@@ -120,6 +121,31 @@ export default function App() {
         <>
           {activeTab === 'dashboard' && (
             <HomeownerDashboard onNavigate={(tab) => setActiveTab(tab)} />
+          )}
+          {activeTab === 'check-image' && (
+            <div className="max-w-4xl mx-auto space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+                    Upload Image to Check (AI Bag Counter)
+                  </h1>
+                  <p className="text-sm md:text-base text-slate-500 mt-1">
+                    Upload any delivery photo from your phone or computer to automatically count cement bags and audit quantities.
+                  </p>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setActiveTab('dashboard')}
+                  className="self-start sm:self-auto cursor-pointer"
+                >
+                  ← Back to Home
+                </Button>
+              </div>
+              <Card className="p-5 sm:p-8 bg-white border border-slate-200 shadow-sm rounded-3xl">
+                <AiBagCounter initialImage="/cement-5-bags.jpg" />
+              </Card>
+            </div>
           )}
           {activeTab === 'materials' && <MaterialHistory />}
           {activeTab === 'progress' && <ProgressHistory />}

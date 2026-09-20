@@ -115,6 +115,37 @@ export const HomeownerDashboard = ({ onNavigate }) => {
         </p>
       </div>
 
+      {/* Upload Image to Check - AI Bag Counter Banner */}
+      <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-white border-2 border-amber-400/50 rounded-3xl p-5 md:p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-bold flex-shrink-0 shadow-md">
+            <Camera className="w-6 h-6" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg md:text-xl font-bold font-heading text-slate-900">
+                Upload Image to Check
+              </h3>
+              <Badge variant="brand" size="sm">AI Bag Counter</Badge>
+            </div>
+            <p className="text-sm text-slate-600 mt-1 max-w-xl">
+              Upload any delivery photo or cement bags picture to automatically detect, count, and audit bags with computer vision bounding boxes.
+            </p>
+          </div>
+        </div>
+
+        <Button
+          variant="primary"
+          size="lg"
+          className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none shadow-md cursor-pointer self-start md:self-auto flex-shrink-0"
+          onClick={() => onNavigate('check-image')}
+        >
+          <Camera className="w-5 h-5" />
+          Upload Image to Check
+          <ArrowRight className="w-4 h-4 ml-1" />
+        </Button>
+      </div>
+
       {/* Trust Gauge & Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-2">
@@ -176,7 +207,14 @@ export const HomeownerDashboard = ({ onNavigate }) => {
         <h3 className="text-lg md:text-xl font-bold text-slate-900 font-heading">
           Quick Actions
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <QuickActionTile
+            title="Upload Image to Check"
+            subtitle="AI cement bag counter & audit"
+            icon={Camera}
+            iconBg="bg-amber-500 text-slate-950 font-bold"
+            onClick={() => onNavigate('check-image')}
+          />
           <QuickActionTile
             title="Material Deliveries"
             subtitle="View invoices, photos & AI counts"
@@ -186,7 +224,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
           <QuickActionTile
             title="Site Photos Timeline"
             subtitle="Visual proof of structural progress"
-            icon={Camera}
+            icon={TrendingUp}
             iconBg="bg-emerald-100 text-emerald-800"
             onClick={() => onNavigate('progress')}
           />

@@ -3,7 +3,10 @@ import React from 'react';
 export const BottomNav = ({ items = [], activeTab, onTabChange }) => {
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200 shadow-lg pb-safe">
-      <div className="grid grid-cols-5 h-16 items-center px-1">
+      <div
+        className="grid h-16 items-center px-1"
+        style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
+      >
         {items.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -28,7 +31,7 @@ export const BottomNav = ({ items = [], activeTab, onTabChange }) => {
                 <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
               </div>
               <span className={`text-[11px] font-bold mt-0.5 truncate max-w-[64px] ${isActive ? 'text-amber-700' : 'text-slate-500'}`}>
-                {item.label}
+                {item.shortLabel || item.label}
               </span>
             </button>
           );

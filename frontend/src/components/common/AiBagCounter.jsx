@@ -23,20 +23,28 @@ import {
  * displaying real-time visual bounding boxes and confidence scores.
  */
 export const AiBagCounter = ({
-  initialImage = null,
+  initialImage = '/cement-5-bags.jpg',
   materialType = 'Cement Bags',
   onCountConfirmed,
   compact = false
 }) => {
-  const [imageSrc, setImageSrc] = useState(initialImage || 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60');
-  const [fileName, setFileName] = useState('');
+  const [imageSrc, setImageSrc] = useState(initialImage);
+  const [fileName, setFileName] = useState('5_Cement_Bags_Delivery.jpg');
   const [analyzing, setAnalyzing] = useState(false);
-  const [detectedCount, setDetectedCount] = useState(150);
-  const [confidence, setConfidence] = useState(96);
-  const [layersCount, setLayersCount] = useState({ rows: 5, cols: 5, depth: 6 });
-  const [boundingBoxes, setBoundingBoxes] = useState([]);
+  const [detectedCount, setDetectedCount] = useState(5);
+  const [confidence, setConfidence] = useState(98);
+  const [layersCount, setLayersCount] = useState({ rows: 4, cols: 1, depth: 1 });
+  const [boundingBoxes, setBoundingBoxes] = useState([
+    { id: 1, left: 27, top: 64, width: 32, height: 18, label: 'Bag #1 (Bottom flat)', confidence: '98.5' },
+    { id: 2, left: 28, top: 50, width: 31, height: 16, label: 'Bag #2 (Layer 2)', confidence: '98.2' },
+    { id: 3, left: 31, top: 38, width: 28, height: 14, label: 'Bag #3 (Layer 3)', confidence: '97.8' },
+    { id: 4, left: 30, top: 24, width: 28, height: 15, label: 'Bag #4 (Top flat)', confidence: '98.1' },
+    { id: 5, left: 55, top: 14, width: 34, height: 76, label: 'Bag #5 (Upright standing)', confidence: '99.0' },
+  ]);
   const [showBoxes, setShowBoxes] = useState(true);
-  const [analysisSummary, setAnalysisSummary] = useState('Palletized stack detected: ~150 bags calculated across 6 tiers with 96% confidence.');
+  const [analysisSummary, setAnalysisSummary] = useState(
+    'Discrete Delivery Detected: Exactly 5 cement bags counted (4 stacked horizontally on left + 1 upright bag on right) with 98% confidence.'
+  );
   
   const fileInputRef = useRef(null);
   const imageRef = useRef(null);
