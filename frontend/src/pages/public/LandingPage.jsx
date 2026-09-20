@@ -129,14 +129,14 @@ export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
 
       {/* 1. HERO SECTION */}
       <section className="relative px-4 pt-12 pb-16 md:pt-20 md:pb-24 max-w-6xl mx-auto text-center space-y-6">
-        <Badge variant="brand" size="lg" className="inline-flex items-center gap-2 mx-auto">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 border border-amber-200/90 text-amber-900 text-xs sm:text-sm font-bold shadow-xs mx-auto">
           <Sparkles className="w-4 h-4 text-amber-600" />
           <span>Independent Construction Transparency Assistant</span>
-        </Badge>
+        </div>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-slate-900 tracking-tight leading-[1.12] max-w-4xl mx-auto">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-heading font-extrabold text-slate-900 tracking-tight leading-[1.15] max-w-4xl mx-auto">
           AI-Powered Transparency for <br className="hidden sm:inline" />
-          <span className="text-amber-600 underline decoration-amber-300 decoration-wavy decoration-2">
+          <span className="text-amber-600">
             Home Construction
           </span>
         </h1>
