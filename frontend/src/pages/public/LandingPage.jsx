@@ -20,11 +20,52 @@ import {
   Clock,
   FileText,
   Building2,
-  ChevronRight
+  ChevronRight,
+  ChevronDown,
+  Calculator,
+  Scale,
+  HelpCircle,
+  Zap,
+  DollarSign,
+  ShieldAlert,
+  Percent,
+  Cpu
 } from 'lucide-react';
 
 export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
   const [activeDemoStep, setActiveDemoStep] = useState(0);
+  const [roiSqFt, setRoiSqFt] = useState(2400);
+  const [openFaq, setOpenFaq] = useState(0);
+  const [howItWorksTab, setHowItWorksTab] = useState('homeowner');
+
+  // Dynamic ROI Calculations based on house sq.ft
+  const estimatedDaysSaved = Math.round((roiSqFt / 2400) * 18);
+  const estimatedMaterialSaved = Math.round((roiSqFt * 75)).toLocaleString('en-IN');
+  const estimatedCementBags = Math.round(roiSqFt * 0.42).toLocaleString('en-IN');
+  const disputeReduction = 92;
+
+  const faqs = [
+    {
+      q: 'What happens if a photo is blurry, dark, or taken from a bad angle?',
+      a: 'BuildGuard AI assesses image clarity in real time. If confidence is below 70%, the AI neutrally flags the item as "Pending Clearer Angle" rather than rejecting it, prompting the site supervisor to retake a photo without any penalty.'
+    },
+    {
+      q: 'Does BuildGuard AI accuse contractors of theft or malpractice?',
+      a: 'Never. Our core philosophy is strict neutrality. If a material requisition is higher than standard norms, BuildGuard generates objective advisory notes (e.g., "Recommended: Verify current on-site storage to protect bags from rain before re-ordering") without accusatory language.'
+    },
+    {
+      q: 'How does the AI calculate if material quantities are normal?',
+      a: 'The AI correlates your registered built-up area (e.g., 2,400 sq.ft), current construction milestone (e.g., Foundation, Ground Floor Slab), and past delivery logs against civil engineering standard consumption coefficients.'
+    },
+    {
+      q: 'Can site contractors and supervisors use this on simple mobile phones?',
+      a: 'Yes! BuildGuard AI is built with responsive mobile-first web technology. There is no heavy app download required — supervisors simply open the mobile site, snap a photo using their camera, and submit in two taps.'
+    },
+    {
+      q: 'Can I export verified records for bank loans, insurance, or property sale?',
+      a: 'Yes! BuildGuard provides 1-click exportable PDF Audit Reports complete with timestamped photo logs, computer vision count summaries, and homeowner approval signatures for full financial compliance.'
+    }
+  ];
 
   const demoSteps = [
     {
@@ -99,13 +140,15 @@ export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
             </span>
           </div>
 
-          <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
+          <nav className="hidden md:flex items-center gap-5 text-sm font-semibold text-slate-300">
             <a href="#problem" className="hover:text-amber-400 transition-colors">The Problem</a>
             <a href="#solution" className="hover:text-amber-400 transition-colors">Solution</a>
+            <a href="#comparison" className="hover:text-amber-400 transition-colors">Comparison</a>
             <a href="#how-it-works" className="hover:text-amber-400 transition-colors">How It Works</a>
             <a href="#features" className="hover:text-amber-400 transition-colors">Features</a>
-            <a href="#benefits" className="hover:text-amber-400 transition-colors">Benefits</a>
-            <a href="#demo-flow" className="hover:text-amber-400 transition-colors">Demo Flow</a>
+            <a href="#calculator" className="hover:text-amber-400 transition-colors">ROI Calculator</a>
+            <a href="#philosophy" className="hover:text-amber-400 transition-colors">Neutral AI</a>
+            <a href="#faq" className="hover:text-amber-400 transition-colors">FAQ</a>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -315,57 +358,228 @@ export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
         </div>
       </section>
 
-      {/* 4. HOW IT WORKS SECTION */}
-      <section id="how-it-works" className="bg-[#0b0f19] border-y border-slate-800 py-16 md:py-24 px-4">
+      {/* FEATURE 1: BEFORE VS AFTER COMPARISON SECTION */}
+      <section id="comparison" className="bg-[#0b0f19] border-y border-slate-800 py-16 md:py-24 px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
-              Three Simple Steps
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center justify-center gap-1.5">
+              <Scale className="w-4 h-4" /> Direct Transformation
             </span>
             <h2 className="text-2xl sm:text-4xl font-bold text-white font-heading">
-              How BuildGuard AI works on site
+              Traditional Construction vs. BuildGuard AI
             </h2>
             <p className="text-sm md:text-base text-slate-400">
-              Designed with WhatsApp-level simplicity so anyone on site can log updates in under 30 seconds.
+              See the direct difference between stressful blind trust and automated AI transparency.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
-                1
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Traditional Construction */}
+            <div className="bg-rose-950/20 border-2 border-rose-900/50 rounded-3xl p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-3 border-b border-rose-900/40 pb-4">
+                <div className="w-10 h-10 rounded-xl bg-rose-900/50 text-rose-400 flex items-center justify-center font-bold">
+                  <XCircle className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-rose-300 font-heading">Traditional Construction</h3>
+                  <p className="text-xs text-rose-400/80">Opaque, manual, and prone to friction</p>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-white">Snap Delivery or Site Photo</h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                Contractor or site supervisor snaps a quick photo of arriving supplies or daily construction work directly from their mobile phone.
-              </p>
+
+              <ul className="space-y-4 text-sm text-slate-300">
+                <li className="flex items-start gap-3">
+                  <XCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">Uncounted Material Drops:</strong>
+                    <span>Deliveries happen unrecorded. Bills are paid based on invoices that nobody counted.</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <XCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">"Black Box" Progress:</strong>
+                    <span>Weeks go by without verifiable proof of milestone completion, leading to endless phone calls.</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <XCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">Awkward Disputes:</strong>
+                    <span>Disagreements over supply usage create tension and damage contractor relationships.</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <XCircle className="w-5 h-5 text-rose-500 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">Slow Payment Sign-Offs:</strong>
+                    <span>Homeowners delay contractor payments because they lack confidence in the work done.</span>
+                  </div>
+                </li>
+              </ul>
             </div>
 
-            <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
-                2
+            {/* With BuildGuard AI */}
+            <div className="bg-emerald-950/20 border-2 border-emerald-700/60 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-emerald-500 text-slate-950 text-xs font-black px-4 py-1 rounded-bl-xl uppercase tracking-wider">
+                Recommended
               </div>
-              <h3 className="text-xl font-bold text-white">AI Computer Vision Audits</h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                BuildGuard AI independently verifies visible material quantities, estimates the current milestone stage, and updates the permanent digital ledger.
-              </p>
-            </div>
 
-            <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
-                3
+              <div className="flex items-center gap-3 border-b border-emerald-800/40 pb-4">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center font-bold shadow-md">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-emerald-300 font-heading">With BuildGuard AI</h3>
+                  <p className="text-xs text-emerald-400/80">Automated, transparent, and collaborative</p>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-white">Homeowner Reviews & Decides</h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
-                Homeowner views real-time photos, sees their Trust Score update, and approves or rejects material requisitions with a single tap.
-              </p>
+
+              <ul className="space-y-4 text-sm text-slate-200">
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">Instant Computer Vision Audits:</strong>
+                    <span>AI detects and counts cement bags & materials from photos in seconds with confidence scores.</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">Verified Milestone Journey:</strong>
+                    <span>Stage detection (Foundation ➔ Framing ➔ Roofing) with clear visual proof and % progress.</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">Neutral Advisory (Zero Blame):</strong>
+                    <span>Objective analysis comparing requested volumes to house square footage neutrally.</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block">1-Tap Fast-Track Approvals:</strong>
+                    <span>Homeowners approve requisitions and release milestone payments with total confidence.</span>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
+      {/* 4. HOW IT WORKS SECTION (WITH DUAL ROLE TOGGLE) */}
+      <section id="how-it-works" className="py-16 md:py-24 px-4 bg-[#090d16]">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center space-y-4 max-w-2xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
+              Interactive Workflow
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold text-white font-heading">
+              How BuildGuard AI works for your role
+            </h2>
+            <p className="text-sm md:text-base text-slate-400">
+              Select your perspective to see how simple and intuitive the workflow is.
+            </p>
+
+            {/* Role Switcher Pill */}
+            <div className="inline-flex p-1.5 bg-slate-900 border border-slate-800 rounded-2xl mx-auto gap-2">
+              <button
+                type="button"
+                onClick={() => setHowItWorksTab('homeowner')}
+                className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                  howItWorksTab === 'homeowner'
+                    ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <ShieldCheck className="w-4 h-4" /> I am a Homeowner
+              </button>
+              <button
+                type="button"
+                onClick={() => setHowItWorksTab('contractor')}
+                className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                  howItWorksTab === 'contractor'
+                    ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <HardHat className="w-4 h-4" /> I am a Contractor
+              </button>
+            </div>
+          </div>
+
+          {howItWorksTab === 'homeowner' ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+              <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
+                  1
+                </div>
+                <h3 className="text-xl font-bold text-white">Receive Real-Time Photo Stream</h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  Every material delivery and construction milestone appears automatically on your phone dashboard with high-resolution site photos.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
+                  2
+                </div>
+                <h3 className="text-xl font-bold text-white">Review Independent AI Verification</h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  See exact computer vision bag counts, confidence percentages, milestone stages, and the calculated project Trust Score.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
+                  3
+                </div>
+                <h3 className="text-xl font-bold text-white">1-Tap Decision & Peace of Mind</h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  Approve requisitions in seconds, track budget utilization without stress, and maintain a positive relationship with your builder.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+              <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
+                  1
+                </div>
+                <h3 className="text-xl font-bold text-white">Snap 2-Tap Site Photos</h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  When cement, rebar, or bricks arrive on site, snap a quick photo on your mobile browser. No paperwork or long forms needed.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
+                  2
+                </div>
+                <h3 className="text-xl font-bold text-white">AI Automatically Audits & Logs</h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  Computer vision logs the delivery proof immediately to the project ledger, eliminating claims that materials never arrived.
+                </p>
+              </div>
+
+              <div className="space-y-4 text-center md:text-left bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-xl flex items-center justify-center mx-auto md:mx-0 shadow-md shadow-amber-500/20">
+                  3
+                </div>
+                <h3 className="text-xl font-bold text-white">Faster Approvals & Faster Payouts</h3>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  Homeowners approve upcoming material orders fast because AI pre-validates requirements against standard engineering norms.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* 5. FEATURES SECTION */}
-      <section id="features" className="py-16 md:py-24 px-4 bg-[#090d16]">
+      <section id="features" className="bg-[#0b0f19] border-y border-slate-800 py-16 md:py-24 px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
@@ -439,6 +653,84 @@ export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
                 One-click exportable PDF transparency summary recording all verified receipts, dates, and milestone logs.
               </p>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURE 2: INTERACTIVE ROI & SAVINGS CALCULATOR */}
+      <section id="calculator" className="py-16 md:py-24 px-4 bg-[#090d16]">
+        <div className="max-w-5xl mx-auto space-y-12">
+          <div className="text-center space-y-3 max-w-2xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center justify-center gap-1.5">
+              <Calculator className="w-4 h-4" /> Financial & Time Savings
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold text-white font-heading">
+              Estimate Your Project Savings
+            </h2>
+            <p className="text-sm md:text-base text-slate-400">
+              Adjust the slider to your property's built-up area and see the tangible impact of BuildGuard AI.
+            </p>
+          </div>
+
+          <div className="bg-slate-900/90 border-2 border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+            {/* Slider Control */}
+            <div className="space-y-4 max-w-2xl mx-auto text-center">
+              <div className="flex justify-between items-center text-sm font-bold text-slate-300">
+                <span>Built-Up Area</span>
+                <span className="text-2xl font-extrabold text-amber-400 font-heading">
+                  {roiSqFt.toLocaleString()} <span className="text-sm font-normal text-slate-400">sq. ft.</span>
+                </span>
+              </div>
+              <input
+                type="range"
+                min="800"
+                max="8000"
+                step="100"
+                value={roiSqFt}
+                onChange={(e) => setRoiSqFt(Number(e.target.value))}
+                className="w-full h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+              />
+              <div className="flex justify-between text-xs text-slate-500 font-medium">
+                <span>Small Villa (800 sq ft)</span>
+                <span>Standard (2,400 sq ft)</span>
+                <span>Large Estate (8,000 sq ft)</span>
+              </div>
+            </div>
+
+            {/* Calculated Metrics Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-800">
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-2 text-center">
+                <div className="text-xs font-bold uppercase text-slate-400">Time Saved</div>
+                <div className="text-3xl font-extrabold text-amber-400 font-heading">
+                  ~{estimatedDaysSaved} <span className="text-base font-medium text-slate-300">Days</span>
+                </div>
+                <div className="text-xs text-slate-400">Eliminating approval bottlenecks</div>
+              </div>
+
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-2 text-center">
+                <div className="text-xs font-bold uppercase text-slate-400">Material Waste Prevented</div>
+                <div className="text-3xl font-extrabold text-emerald-400 font-heading">
+                  ₹{estimatedMaterialSaved}
+                </div>
+                <div className="text-xs text-slate-400">Avoided spoilage & excess orders</div>
+              </div>
+
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-2 text-center">
+                <div className="text-xs font-bold uppercase text-slate-400">Cement Bags Tracked</div>
+                <div className="text-3xl font-extrabold text-blue-400 font-heading">
+                  ~{estimatedCementBags}
+                </div>
+                <div className="text-xs text-slate-400">Verified via Computer Vision</div>
+              </div>
+
+              <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-2 text-center">
+                <div className="text-xs font-bold uppercase text-slate-400">Dispute Reduction</div>
+                <div className="text-3xl font-extrabold text-purple-400 font-heading">
+                  {disputeReduction}%
+                </div>
+                <div className="text-xs text-slate-400">Peaceful project collaboration</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -548,8 +840,57 @@ export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
         </div>
       </section>
 
+      {/* FEATURE 3: NEUTRAL AI PHILOSOPHY & TRUST GUARANTEE */}
+      <section id="philosophy" className="py-16 md:py-24 px-4 bg-[#090d16]">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-amber-950/30 border-2 border-amber-600/50 rounded-3xl p-8 md:p-12 space-y-6 shadow-2xl relative">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
+              <ShieldCheck className="w-4 h-4" /> Our Ethical Guarantee
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-heading leading-tight">
+              The "Neutral AI" Guarantee: <br />
+              <span className="text-amber-400">An Assistant, Never an Accuser</span>
+            </h2>
+
+            <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-3xl">
+              Traditional site inspections often breed defensiveness. BuildGuard AI is explicitly programmed with strict civil engineering neutrality:
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+              <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
+                <span className="text-emerald-400 font-bold text-sm flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4" /> Zero Accusations
+                </span>
+                <p className="text-xs text-slate-400">
+                  BuildGuard AI never uses words like "theft," "fraud," or "dishonesty."
+                </p>
+              </div>
+
+              <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
+                <span className="text-amber-400 font-bold text-sm flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4" /> Objective Sanity Checks
+                </span>
+                <p className="text-xs text-slate-400">
+                  Advisory suggestions focus strictly on weather storage and phase alignment.
+                </p>
+              </div>
+
+              <div className="bg-slate-950/80 p-4 rounded-2xl border border-slate-800 space-y-2">
+                <span className="text-blue-400 font-bold text-sm flex items-center gap-1.5">
+                  <Layers className="w-4 h-4" /> Transparent Evidence
+                </span>
+                <p className="text-xs text-slate-400">
+                  Both parties see identical data and confidence metrics simultaneously.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 7. DEMO FLOW WALKTHROUGH SECTION */}
-      <section id="demo-flow" className="py-16 md:py-24 px-4 bg-[#090d16]">
+      <section id="demo-flow" className="bg-[#0b0f19] border-y border-slate-800 py-16 md:py-24 px-4">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
@@ -669,6 +1010,55 @@ export const LandingPage = ({ onGoHomeowner, onGoContractor, onGoLogin }) => {
                 )}
               </div>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURE 4: INTERACTIVE FAQ ACCORDION */}
+      <section id="faq" className="py-16 md:py-24 px-4 bg-[#090d16]">
+        <div className="max-w-4xl mx-auto space-y-12">
+          <div className="text-center space-y-3 max-w-2xl mx-auto">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center justify-center gap-1.5">
+              <HelpCircle className="w-4 h-4" /> Got Questions?
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-bold text-white font-heading">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-sm md:text-base text-slate-400">
+              Clear answers to the most common questions about BuildGuard AI.
+            </p>
+          </div>
+
+          <div className="space-y-4">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <div
+                  key={index}
+                  className="border border-slate-800 bg-slate-900/80 rounded-2xl overflow-hidden transition-all"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? null : index)}
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-slate-850 transition-colors"
+                  >
+                    <span className="text-base sm:text-lg font-bold text-white font-heading">
+                      {faq.q}
+                    </span>
+                    <ChevronDown
+                      className={`w-5 h-5 text-amber-400 flex-shrink-0 transition-transform duration-200 ${
+                        isOpen ? 'transform rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 pb-6 sm:px-6 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-800/60 pt-4">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
