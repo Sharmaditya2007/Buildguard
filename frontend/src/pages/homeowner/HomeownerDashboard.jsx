@@ -61,15 +61,16 @@ export const HomeownerDashboard = ({ onNavigate }) => {
         const d = res.data;
         setData(prev => ({
           ...prev,
-          projectName: d.project?.projectName || prev.projectName,
-          currentStage: d.progress?.currentStage || prev.currentStage,
-          completionPercentage: d.progress?.completionPercentage || prev.completionPercentage,
-          aiSummary: d.progress?.aiSummary || prev.aiSummary,
-          trustScore: d.materials?.trustScorePercentage || prev.trustScore,
-          totalDeliveries: d.materials?.totalDeliveries || prev.totalDeliveries,
-          verifiedDeliveries: d.materials?.aiVerified || prev.verifiedDeliveries,
-          discrepancies: d.materials?.aiDiscrepancies || prev.discrepancies,
-          pendingRequests: d.requests?.pending || prev.pendingRequests,
+          projectName: d.project?.projectName || d.projectName || prev.projectName,
+          currentStage: d.progress?.currentStage || d.currentStage || prev.currentStage,
+          completionPercentage: d.progress?.completionPercentage || d.completionPercentage || prev.completionPercentage,
+          aiSummary: d.progress?.aiSummary || d.aiSummary || prev.aiSummary,
+          trustScore: d.materials?.trustScorePercentage || d.trustScore || prev.trustScore,
+          totalDeliveries: d.materials?.totalDeliveries ?? d.totalDeliveries ?? prev.totalDeliveries,
+          verifiedDeliveries: d.materials?.aiVerified ?? d.verifiedDeliveries ?? prev.verifiedDeliveries,
+          discrepancies: d.materials?.aiDiscrepancies ?? d.discrepancies ?? prev.discrepancies,
+          pendingRequests: d.requests?.pending ?? d.pendingRequests ?? prev.pendingRequests,
+          recentDeliveries: d.recentDeliveries && d.recentDeliveries.length > 0 ? d.recentDeliveries : prev.recentDeliveries
         }));
       }
     }

@@ -1,10 +1,95 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { Printer, Download, ShieldCheck, FileText, CheckCircle2, Calendar } from 'lucide-react';
+import { apiClient } from '../../services/api';
 
 export const ReportsPage = () => {
+  const [data, setData] = useState({
+    projectName: 'Greenwood Villa B-4',
+    currentStage: 'Framing & Structure',
+    completionPercentage: 45,
+    trustScore: 92,
+    totalDeliveries: 10,
+    verifiedDeliveries: 9,
+    discrepancies: 1,
+    contractor: 'Apex Builders Pvt Ltd',
+    materialsList: [
+      {
+        materialType: 'UltraTech 53 Grade Cement',
+        quantity: '150 bags',
+        status: 'Verified',
+        date: new Date().toLocaleDateString(),
+        confidence: '96%'
+      },
+      {
+        materialType: 'Fe-550D TMT Steel Rebar',
+        quantity: '4 Metric Tons',
+        status: 'Verified',
+        date: new Date(Date.now() - 86400000 * 2).toLocaleDateString(),
+        confidence: '92%'
+      },
+      {
+        materialType: 'First-Class Red Clay Bricks',
+        quantity: '4,000 units',
+        status: 'Discrepancy Detected',
+        date: new Date(Date.now() - 86400000 * 4).toLocaleDateString(),
+        confidence: 'Variance (3,200 visible)'
+      },
+      {
+        materialType: 'Coarse River Sand',
+        quantity: '12 Metric Tons',
+        status: 'Verified',
+        date: new Date(Date.now() - 86400000 * 7).toLocaleDateString(),
+        confidence: '90%'
+      },
+      {
+        materialType: '20mm Crushed Granite Aggregate',
+        quantity: '15 Metric Tons',
+        status: 'Verified',
+        date: new Date(Date.now() - 86400000 * 9).toLocaleDateString(),
+        confidence: '94%'
+      },
+      {
+        materialType: 'Ready-Mix Concrete M25 Grade',
+        quantity: '8 Cubic Meters',
+        status: 'Verified',
+        date: new Date(Date.now() - 86400000 * 12).toLocaleDateString(),
+        confidence: '95%'
+      }
+    ]
+  });
+
+  useEffect(() => {
+    async function loadData() {
+      const dashRes = await apiClient.getHomeownerDashboard();
+      const matRes = await apiClient.getMaterialHistory();
+
+      const d = dashRes?.data || {};
+      const mats = matRes?.data || [];
+
+      setData(prev => ({
+        ...prev,
+        projectName: d.projectName || prev.projectName,
+        currentStage: d.currentStage || prev.currentStage,
+        completionPercentage: d.completionPercentage || prev.completionPercentage,
+        trustScore: d.trustScore || prev.trustScore,
+        totalDeliveries: d.totalDeliveries ?? prev.totalDeliveries,
+        verifiedDeliveries: d.verifiedDeliveries ?? prev.verifiedDeliveries,
+        discrepancies: d.discrepancies ?? prev.discrepancies,
+        materialsList: mats.length > 0 ? mats.slice(0, 8).map(m => ({
+          materialType: m.materialType,
+          quantity: m.quantity,
+          status: m.status || 'Verified',
+          date: m.date ? new Date(m.date).toLocaleDateString() : 'Recent',
+          confidence: m.notes?.includes('%') ? m.notes.match(/\d+%/)[0] : 'Verified'
+        })) : prev.materialsList
+      }));
+    }
+    loadData();
+  }, []);
+
   const handlePrint = () => {
     window.print();
   };
@@ -71,7 +156,7 @@ export const ReportsPage = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-200/80 text-xs md:text-sm">
           <div>
             <span className="text-slate-400 block font-bold text-[11px] uppercase">Project Name</span>
-            <span className="font-bold text-slate-900">Greenwood Villa B-4</span>
+            <span className="font-bold text-slate-900">{data.projectName}</span>
           </div>
           <div>
             <span className="text-slate-400 block font-bold text-[11px] uppercase">Built-Up Area</span>
@@ -79,11 +164,11 @@ export const ReportsPage = () => {
           </div>
           <div>
             <span className="text-slate-400 block font-bold text-[11px] uppercase">Current Milestone</span>
-            <span className="font-bold text-amber-700">Framing & Structure (45%)</span>
+            <span className="font-bold text-amber-700">{data.currentStage} ({data.completionPercentage}%)</span>
           </div>
           <div>
             <span className="text-slate-400 block font-bold text-[11px] uppercase">Contractor</span>
-            <span className="font-bold text-slate-900">Apex Builders Pvt Ltd</span>
+            <span className="font-bold text-slate-900">{data.contractor}</span>
           </div>
         </div>
 
@@ -91,18 +176,18 @@ export const ReportsPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="p-4 rounded-xl border border-slate-200 text-center space-y-1">
             <span className="text-xs text-slate-500 font-bold uppercase">Material Integrity Score</span>
-            <p className="text-3xl font-extrabold text-emerald-600">90%</p>
-            <span className="text-xs text-slate-400">9 of 10 deliveries verified</span>
+            <p className="text-3xl font-extrabold text-emerald-600">{data.trustScore}%</p>
+            <span className="text-xs text-slate-400">{data.verifiedDeliveries} of {data.totalDeliveries} deliveries verified</span>
           </div>
           <div className="p-4 rounded-xl border border-slate-200 text-center space-y-1">
             <span className="text-xs text-slate-500 font-bold uppercase">Total Materials Logged</span>
-            <p className="text-3xl font-extrabold text-slate-900">10</p>
+            <p className="text-3xl font-extrabold text-slate-900">{data.totalDeliveries}</p>
             <span className="text-xs text-slate-400">Photographic proof recorded</span>
           </div>
           <div className="p-4 rounded-xl border border-slate-200 text-center space-y-1">
             <span className="text-xs text-slate-500 font-bold uppercase">Site Stage Completion</span>
-            <p className="text-3xl font-extrabold text-amber-600">45%</p>
-            <span className="text-xs text-slate-400">Foundation & Framing complete</span>
+            <p className="text-3xl font-extrabold text-amber-600">{data.completionPercentage}%</p>
+            <span className="text-xs text-slate-400">{data.currentStage} in progress</span>
           </div>
         </div>
 
@@ -122,30 +207,20 @@ export const ReportsPage = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
-                <tr>
-                  <td className="p-3 font-semibold text-slate-900">UltraTech 53 Grade Cement</td>
-                  <td className="p-3">150 bags</td>
-                  <td className="p-3"><Badge variant="verified" size="sm">Verified (96%)</Badge></td>
-                  <td className="p-3">Today</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-semibold text-slate-900">Fe-550D TMT Steel Rebar</td>
-                  <td className="p-3">4 Metric Tons</td>
-                  <td className="p-3"><Badge variant="verified" size="sm">Verified (92%)</Badge></td>
-                  <td className="p-3">2 days ago</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-semibold text-slate-900">First-Class Red Clay Bricks</td>
-                  <td className="p-3">4,000 units</td>
-                  <td className="p-3"><Badge variant="warning" size="sm">Variance (3,200 visible)</Badge></td>
-                  <td className="p-3">4 days ago</td>
-                </tr>
-                <tr>
-                  <td className="p-3 font-semibold text-slate-900">Coarse River Sand</td>
-                  <td className="p-3">12 Metric Tons</td>
-                  <td className="p-3"><Badge variant="verified" size="sm">Verified (90%)</Badge></td>
-                  <td className="p-3">1 week ago</td>
-                </tr>
+                {data.materialsList.map((m, idx) => (
+                  <tr key={idx}>
+                    <td className="p-3 font-semibold text-slate-900">{m.materialType}</td>
+                    <td className="p-3">{m.quantity}</td>
+                    <td className="p-3">
+                      {m.status === 'Verified' ? (
+                        <Badge variant="verified" size="sm">Verified ({m.confidence || '95%'})</Badge>
+                      ) : (
+                        <Badge variant="warning" size="sm">Variance Detected</Badge>
+                      )}
+                    </td>
+                    <td className="p-3">{m.date}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

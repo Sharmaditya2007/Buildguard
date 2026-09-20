@@ -19,10 +19,30 @@ import { apiClient } from '../../services/api';
 export const ContractorDashboard = ({ onNavigate }) => {
   const [stats, setStats] = useState({
     activeSites: 1,
-    todayDeliveries: 2,
-    pendingApprovals: 1,
+    totalDeliveries: 10,
     verifiedDeliveries: 9,
+    pendingApprovals: 1,
+    currentStage: 'Framing & Structure',
+    completionPercentage: 45,
   });
+
+  useEffect(() => {
+    async function loadStats() {
+      const res = await apiClient.getHomeownerDashboard();
+      if (res.success && res.data) {
+        const d = res.data;
+        setStats({
+          activeSites: 1,
+          totalDeliveries: d.totalDeliveries ?? 10,
+          verifiedDeliveries: d.verifiedDeliveries ?? 9,
+          pendingApprovals: d.pendingRequests ?? 1,
+          currentStage: d.currentStage || 'Framing & Structure',
+          completionPercentage: d.completionPercentage || 45,
+        });
+      }
+    }
+    loadStats();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -62,28 +82,28 @@ export const ContractorDashboard = ({ onNavigate }) => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         <StatCard
           title="Active Sites"
-          value="1"
+          value={String(stats.activeSites || 1)}
           subtitle="Greenwood Villa B-4"
           icon={HardHat}
         />
         <StatCard
           title="Logged Deliveries"
-          value="10"
-          subtitle="9 AI verified"
+          value={String(stats.totalDeliveries || 10)}
+          subtitle={`${stats.verifiedDeliveries || 9} AI verified`}
           icon={ShieldCheck}
           iconBg="bg-emerald-50 text-emerald-600 border border-emerald-200/80"
         />
         <StatCard
           title="Requisitions"
-          value="1"
+          value={String(stats.pendingApprovals || 1)}
           subtitle="Awaiting homeowner"
           icon={Clock}
           iconBg="bg-amber-50 text-amber-700 border border-amber-200"
         />
         <StatCard
           title="Current Stage"
-          value="45%"
-          subtitle="Framing & Structure"
+          value={`${stats.completionPercentage || 45}%`}
+          subtitle={stats.currentStage || 'Framing & Structure'}
           icon={Layers}
           iconBg="bg-blue-50 text-blue-600 border border-blue-200/80"
         />

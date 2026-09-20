@@ -53,13 +53,13 @@ export const ProgressHistory = () => {
       if (res.success && Array.isArray(res.data) && res.data.length > 0) {
         const formatted = res.data.map(p => ({
           id: p._id || p.id,
-          stage: p.detectedStage || 'Framing & Structure',
-          progressPercentage: p.progressPercentage || 45,
-          date: p.uploadDate,
-          uploader: p.uploadedBy?.name || 'Contractor',
-          notes: p.notes || 'Site photo logged.',
-          aiSummary: p.aiSummary || 'AI visual inspection evaluated.',
-          images: p.images || []
+          stage: p.detectedStage || p.stage || 'Framing & Structure',
+          progressPercentage: p.progressPercentage || p.completionPercentage || 45,
+          date: p.uploadDate || p.date || new Date().toISOString(),
+          uploader: p.uploadedBy?.name || p.uploader || 'Apex Builders',
+          notes: p.notes || p.summary || 'Site photo logged.',
+          aiSummary: p.aiSummary || p.summary || 'AI visual inspection evaluated.',
+          images: (p.images && p.images.length > 0) ? p.images : (p.photos && p.photos.length > 0 ? p.photos : [])
         }));
         setUpdates(formatted);
       }

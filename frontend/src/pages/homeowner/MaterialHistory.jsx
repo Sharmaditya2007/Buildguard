@@ -62,17 +62,24 @@ export const MaterialHistory = () => {
     async function loadMaterials() {
       const res = await apiClient.getMaterialHistory('65f000000000000000000010', page, 8);
       if (res.success && Array.isArray(res.data) && res.data.length > 0) {
-        // Hydrate from live backend if online
-        const formatted = res.data.map(m => ({
-          id: m._id || m.id,
-          materialType: m.materialType,
-          quantity: `${m.quantity} ${m.unit || 'units'}`,
-          status: m.aiVerificationResult?.status || 'Verified',
-          imageUrl: m.imageUrl,
-          uploader: m.uploadedBy?.name || 'Contractor',
-          date: m.uploadDate,
-          notes: m.aiVerificationResult?.notes || 'AI inspection verified.'
-        }));
+        const formatted = res.data.map(m => {
+          let displayQty = m.quantity;
+          if (typeof m.quantity === 'number') {
+            displayQty = `${m.quantity} ${m.unit || 'units'}`;
+          } else if (typeof m.quantity === 'string' && m.unit && !m.quantity.includes(m.unit)) {
+            displayQty = `${m.quantity} ${m.unit}`;
+          }
+          return {
+            id: m._id || m.id,
+            materialType: m.materialType,
+            quantity: displayQty,
+            status: m.aiVerificationResult?.status || m.status || 'Verified',
+            imageUrl: m.imageUrl,
+            uploader: m.uploadedBy?.name || m.uploader || 'Apex Builders',
+            date: m.uploadDate || m.date || new Date().toISOString(),
+            notes: m.aiVerificationResult?.notes || m.notes || 'AI inspection verified.'
+          };
+        });
         setMaterials(formatted);
       }
     }

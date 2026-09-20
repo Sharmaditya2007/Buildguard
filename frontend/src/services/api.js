@@ -56,6 +56,7 @@ const getInitialDemoData = () => ({
       imageUrl: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60',
       uploader: 'Apex Builders',
       date: new Date().toISOString(),
+      uploadDate: new Date().toISOString(),
       notes: 'Approximately 150 cement bags detected with 96% confidence.'
     },
     {
@@ -67,6 +68,7 @@ const getInitialDemoData = () => ({
       imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60',
       uploader: 'Apex Builders',
       date: new Date(Date.now() - 86400000 * 2).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 2).toISOString(),
       notes: 'Bundles checked on flatbed trailer. Visible quantity conforms to dispatch invoice.'
     },
     {
@@ -78,6 +80,7 @@ const getInitialDemoData = () => ({
       imageUrl: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&auto=format&fit=crop&q=60',
       uploader: 'Apex Builders',
       date: new Date(Date.now() - 86400000 * 4).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 4).toISOString(),
       notes: 'Visible count appears closer to 3,200 bricks. Some stacks may be positioned behind the main wall.'
     },
     {
@@ -89,16 +92,99 @@ const getInitialDemoData = () => ({
       imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60',
       uploader: 'Apex Builders',
       date: new Date(Date.now() - 86400000 * 7).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 7).toISOString(),
       notes: 'Dumper delivery volume checked against bed height marks.'
+    },
+    {
+      id: 'mat-5',
+      materialType: '20mm Crushed Granite Aggregate',
+      quantity: '15 Metric Tons',
+      unit: 'tons',
+      status: 'Verified',
+      imageUrl: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&auto=format&fit=crop&q=60',
+      uploader: 'Apex Builders',
+      date: new Date(Date.now() - 86400000 * 9).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 9).toISOString(),
+      notes: 'Granite coarse aggregate verified for pillar casting grade.'
+    },
+    {
+      id: 'mat-6',
+      materialType: 'Ready-Mix Concrete M25 Grade',
+      quantity: '8 Cubic Meters',
+      unit: 'cu.m',
+      status: 'Verified',
+      imageUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb180c5f2?w=800&auto=format&fit=crop&q=60',
+      uploader: 'Apex Builders',
+      date: new Date(Date.now() - 86400000 * 12).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 12).toISOString(),
+      notes: 'Transit mixer batching slip validated for ground floor lintels.'
+    },
+    {
+      id: 'mat-7',
+      materialType: '18-Gauge TMT Binding Wire',
+      quantity: '50 Kilograms',
+      unit: 'kg',
+      status: 'Verified',
+      imageUrl: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60',
+      uploader: 'Apex Builders',
+      date: new Date(Date.now() - 86400000 * 15).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 15).toISOString(),
+      notes: 'Mild steel bundle coils inspected in site shed.'
+    },
+    {
+      id: 'mat-8',
+      materialType: 'UltraTech Super PPC Cement',
+      quantity: '100 bags',
+      unit: 'bags',
+      status: 'Verified',
+      imageUrl: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60',
+      uploader: 'Apex Builders',
+      date: new Date(Date.now() - 86400000 * 18).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 18).toISOString(),
+      notes: 'Pallet stack verified with barcode seal stickers intact.'
+    },
+    {
+      id: 'mat-9',
+      materialType: 'Foundation Granite Rubble Stones',
+      quantity: '10 Truckloads',
+      unit: 'trucks',
+      status: 'Verified',
+      imageUrl: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop&q=60',
+      uploader: 'Apex Builders',
+      date: new Date(Date.now() - 86400000 * 22).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 22).toISOString(),
+      notes: 'Plinth level masonry stone volume matches pit requirements.'
+    },
+    {
+      id: 'mat-10',
+      materialType: 'Dr. Fixit Damp-Proof Waterproofing',
+      quantity: '40 Liters',
+      unit: 'liters',
+      status: 'Verified',
+      imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60',
+      uploader: 'Apex Builders',
+      date: new Date(Date.now() - 86400000 * 25).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 25).toISOString(),
+      notes: 'Sealed chemical drums checked for foundation footing coating.'
     }
   ],
   progress: [
     {
       id: 'prg-1',
       stage: 'Framing & Structure',
+      detectedStage: 'Framing & Structure',
       completionPercentage: 45,
+      progressPercentage: 45,
       date: new Date().toISOString(),
+      uploadDate: new Date().toISOString(),
+      uploader: 'Apex Builders',
       summary: 'Ground floor outer pillars finished. Wall framing positioned with steel rebars tied.',
+      notes: 'Ground floor outer pillars finished. Wall framing positioned with steel rebars tied.',
+      aiSummary: 'Framing appears 45% complete with structural reinforcement aligned.',
+      images: [
+        'https://images.unsplash.com/photo-1541888946425-d0fbb180c5f2?w=800&auto=format&fit=crop&q=60',
+        'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60'
+      ],
       photos: [
         'https://images.unsplash.com/photo-1541888946425-d0fbb180c5f2?w=800&auto=format&fit=crop&q=60',
         'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60'
@@ -107,11 +193,39 @@ const getInitialDemoData = () => ({
     {
       id: 'prg-2',
       stage: 'Foundation & Footings',
+      detectedStage: 'Foundation & Footings',
       completionPercentage: 100,
+      progressPercentage: 100,
       date: new Date(Date.now() - 86400000 * 14).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 14).toISOString(),
+      uploader: 'Apex Builders',
       summary: 'Foundation trenches dug, footing concrete poured and cured for 14 days.',
+      notes: 'Foundation trenches dug, footing concrete poured and cured for 14 days.',
+      aiSummary: 'Foundation appears 100% complete with concrete cured successfully.',
+      images: [
+        'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop&q=60'
+      ],
       photos: [
-        'https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&auto=format&fit=crop&q=60'
+        'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop&q=60'
+      ]
+    },
+    {
+      id: 'prg-3',
+      stage: 'Excavation & Earthwork',
+      detectedStage: 'Excavation & Earthwork',
+      completionPercentage: 100,
+      progressPercentage: 100,
+      date: new Date(Date.now() - 86400000 * 28).toISOString(),
+      uploadDate: new Date(Date.now() - 86400000 * 28).toISOString(),
+      uploader: 'Apex Builders',
+      summary: 'Site leveling and baseline pit excavation executed according to architectural plot specs.',
+      notes: 'Site leveling and baseline pit excavation executed according to architectural plot specs.',
+      aiSummary: 'Site excavation completed according to foundation coordinates.',
+      images: [
+        'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&auto=format&fit=crop&q=60'
+      ],
+      photos: [
+        'https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&auto=format&fit=crop&q=60'
       ]
     }
   ],
