@@ -7,14 +7,14 @@ export const QuickActionTile = ({
   icon: Icon,
   onClick,
   badge,
-  iconBg = 'bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300',
+  iconBg = 'bg-amber-950/40 text-amber-300',
   className = '',
 }) => {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`w-full min-h-[72px] p-4 md:p-5 bg-white dark:bg-slate-900/80 rounded-2xl border-2 border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500/60 hover:shadow-stripe-md active:scale-[0.99] transition-all flex items-center justify-between gap-4 text-left cursor-pointer group ${className}`}
+      className={`w-full min-h-[72px] p-4 md:p-5 bg-slate-900/90 rounded-2xl border-2 border-slate-800 hover:border-amber-500/60 hover:shadow-stripe-md active:scale-[0.99] transition-all flex items-center justify-between gap-4 text-left cursor-pointer group ${className}`}
     >
       <div className="flex items-center gap-3.5">
         {Icon && (
@@ -24,20 +24,20 @@ export const QuickActionTile = ({
         )}
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-base md:text-lg font-bold text-slate-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors">
+            <span className="text-base md:text-lg font-bold text-white group-hover:text-amber-400 transition-colors">
               {title}
             </span>
             {badge && <div>{badge}</div>}
           </div>
           {subtitle && (
-            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+            <p className="text-xs md:text-sm text-slate-400 mt-0.5 line-clamp-1">
               {subtitle}
             </p>
           )}
         </div>
       </div>
 
-      <ChevronRight className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors flex-shrink-0" />
+      <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-amber-400 transition-colors flex-shrink-0" />
     </button>
   );
 };

@@ -66,23 +66,23 @@ export const UploadMaterial = ({ onComplete }) => {
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white">
           Log Material Delivery & AI Bag Counter
         </h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1">
+        <p className="text-sm md:text-base text-slate-400 mt-1">
           Upload any site delivery photo to automatically count bags, verify quantities, and record to the project ledger.
         </p>
       </div>
 
       {submitted ? (
-        <Card className="p-8 text-center space-y-4 bg-emerald-50/70 border-emerald-200">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+        <Card className="p-8 text-center space-y-4 bg-emerald-950/30 border-emerald-800/60">
+          <div className="w-16 h-16 rounded-full bg-emerald-900/50 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-700/60">
             <CheckCircle2 className="w-10 h-10" />
           </div>
-          <h2 className="text-2xl font-bold text-emerald-950">
+          <h2 className="text-2xl font-bold text-emerald-300">
             Delivery Logged & Verified Successfully!
           </h2>
-          <p className="text-sm text-emerald-800 max-w-md mx-auto">
+          <p className="text-sm text-emerald-200/90 max-w-md mx-auto">
             {quantity} {unit} of {materialType} has been added to the project material ledger with photographic AI proof.
           </p>
           <div className="pt-3">
@@ -92,7 +92,7 @@ export const UploadMaterial = ({ onComplete }) => {
           </div>
         </Card>
       ) : (
-        <Card className="p-5 sm:p-8 space-y-6">
+        <Card className="p-5 sm:p-8 space-y-6 bg-slate-900/90 border border-slate-800">
           {/* Step 1: Real AI Vision Bag Counter & Upload Zone */}
           <AiBagCounter
             initialImage={imageUrl}
@@ -101,9 +101,9 @@ export const UploadMaterial = ({ onComplete }) => {
           />
 
           {/* Step 2: Delivery Details Form */}
-          <div className="space-y-4 pt-4 border-t border-slate-200">
+          <div className="space-y-4 pt-4 border-t border-slate-800">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              <span className="text-sm font-bold text-slate-200 uppercase tracking-wider">
                 Delivery Details
               </span>
               <span className="text-xs text-slate-400">
@@ -147,7 +147,7 @@ export const UploadMaterial = ({ onComplete }) => {
               icon={Sparkles}
               loading={loadingAi}
               onClick={handleRunManualScan}
-              className="border-amber-400 text-amber-900 bg-amber-50/70 hover:bg-amber-100"
+              className="border-amber-500/40 text-amber-300 bg-amber-950/30 hover:bg-amber-900/40"
             >
               Re-Scan Image with AI Computer Vision
             </Button>
@@ -155,23 +155,23 @@ export const UploadMaterial = ({ onComplete }) => {
 
           {/* AI Result Card */}
           {aiResult && (
-            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2.5 animate-fadeIn">
+            <div className="p-4 rounded-2xl bg-emerald-950/40 border border-emerald-800/60 space-y-2.5 animate-fadeIn">
               <div className="flex items-center justify-between">
                 <Badge variant="verified" size="sm" icon={ShieldCheck}>
                   AI Audit Status: Verified
                 </Badge>
-                <span className="text-xs font-bold text-emerald-800">
+                <span className="text-xs font-bold text-emerald-300">
                   {Math.round(aiResult.confidenceScore * 100)}% Confidence
                 </span>
               </div>
 
-              <p className="text-sm font-bold text-emerald-950">
+              <p className="text-sm font-bold text-emerald-100">
                 {aiResult.summary}
               </p>
 
-              <div className="text-xs text-emerald-800/90 bg-white/80 p-2.5 rounded-xl flex items-center justify-between">
-                <span>Visual Count: <strong className="text-emerald-950">{quantity} {unit}</strong></span>
-                <span className="text-slate-500">Neutral civil audit verified</span>
+              <div className="text-xs text-emerald-300 bg-slate-850/80 border border-slate-700/60 p-2.5 rounded-xl flex items-center justify-between">
+                <span>Visual Count: <strong className="text-emerald-200">{quantity} {unit}</strong></span>
+                <span className="text-slate-400">Neutral civil audit verified</span>
               </div>
             </div>
           )}

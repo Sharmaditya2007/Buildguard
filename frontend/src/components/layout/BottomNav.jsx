@@ -2,7 +2,7 @@ import React from 'react';
 
 export const BottomNav = ({ items = [], activeTab, onTabChange }) => {
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 shadow-lg pb-safe transition-colors">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur border-t border-slate-800 shadow-lg pb-safe">
       <div
         className="grid h-16 items-center px-1"
         style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
@@ -17,7 +17,7 @@ export const BottomNav = ({ items = [], activeTab, onTabChange }) => {
               type="button"
               onClick={() => onTabChange(item.id)}
               className={`flex flex-col items-center justify-center h-full w-full py-1 text-center transition-colors cursor-pointer select-none relative ${
-                isActive ? 'text-amber-500 dark:text-amber-400' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200'
+                isActive ? 'text-amber-400' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
               {/* Badge counter */}
@@ -27,10 +27,10 @@ export const BottomNav = ({ items = [], activeTab, onTabChange }) => {
                 </span>
               )}
 
-              <div className={`p-1 rounded-xl transition-all ${isActive ? 'bg-amber-100/60 dark:bg-amber-950/70 text-amber-500' : ''}`}>
+              <div className={`p-1 rounded-xl transition-all ${isActive ? 'bg-amber-950/70 text-amber-400' : ''}`}>
                 <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-2'}`} />
               </div>
-              <span className={`text-[11px] font-bold mt-0.5 truncate max-w-[64px] ${isActive ? 'text-amber-700 dark:text-amber-400' : 'text-slate-500 dark:text-slate-400'}`}>
+              <span className={`text-[11px] font-bold mt-0.5 truncate max-w-[64px] ${isActive ? 'text-amber-400' : 'text-slate-400'}`}>
                 {item.shortLabel || item.label}
               </span>
             </button>

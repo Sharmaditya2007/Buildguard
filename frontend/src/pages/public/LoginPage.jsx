@@ -29,33 +29,33 @@ export const LoginPage = ({ onBack, onGoSignup }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#090d16] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 text-white">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <button
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-slate-900 mb-6 cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-400 hover:text-white mb-6 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </button>
 
         <div className="flex justify-center">
-          <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-extrabold shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-extrabold shadow-sm shadow-amber-500/20">
             <HardHat className="w-7 h-7" />
           </div>
         </div>
-        <h2 className="mt-3 text-center text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+        <h2 className="mt-3 text-center text-2xl sm:text-3xl font-heading font-extrabold text-white">
           Sign in to BuildGuard AI
         </h2>
-        <p className="mt-1 text-center text-sm text-slate-500">
+        <p className="mt-1 text-center text-sm text-slate-400">
           Select your portal or enter your account credentials
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md space-y-6">
         {/* 1-Click Demo Accounts Card */}
-        <Card className="p-5 bg-amber-50/60 border-amber-200/80 space-y-3">
+        <Card className="p-5 bg-slate-900/90 border-slate-800 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-900">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
               ⚡ Instant 1-Click Demo Portals
             </span>
             <Badge variant="brand" size="sm">No Password Needed</Badge>
@@ -66,7 +66,7 @@ export const LoginPage = ({ onBack, onGoSignup }) => {
               size="md"
               icon={ShieldCheck}
               onClick={loginAsHomeowner}
-              className="text-sm font-bold"
+              className="text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 border-none"
             >
               Homeowner
             </Button>
@@ -75,7 +75,7 @@ export const LoginPage = ({ onBack, onGoSignup }) => {
               size="md"
               icon={HardHat}
               onClick={loginAsContractor}
-              className="text-sm font-bold"
+              className="text-sm font-bold bg-slate-800 hover:bg-slate-700 text-white border border-slate-700"
             >
               Contractor
             </Button>
@@ -83,10 +83,10 @@ export const LoginPage = ({ onBack, onGoSignup }) => {
         </Card>
 
         {/* Regular Login Form */}
-        <Card className="p-6 md:p-8 space-y-5">
+        <Card className="p-6 md:p-8 space-y-5 bg-slate-900/90 border-slate-800">
           <form onSubmit={handleManualLogin} className="space-y-4">
             {error && (
-              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-xl font-medium">
+              <div className="p-3 bg-rose-950/60 border border-rose-850 text-rose-300 text-sm rounded-xl font-medium">
                 {error}
               </div>
             )}
@@ -113,23 +113,23 @@ export const LoginPage = ({ onBack, onGoSignup }) => {
 
             <Button
               type="submit"
-              variant="primary"
+              variant="brand"
               size="lg"
               fullWidth
               loading={loading}
-              className="mt-2"
+              className="mt-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none"
             >
               Sign In
             </Button>
           </form>
 
           <div className="text-center pt-2">
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-400">
               Don't have an account yet?{' '}
               <button
                 type="button"
                 onClick={onGoSignup}
-                className="font-bold text-amber-700 hover:text-amber-800 underline cursor-pointer"
+                className="font-bold text-amber-400 hover:text-amber-300 underline cursor-pointer"
               >
                 Sign up free
               </button>

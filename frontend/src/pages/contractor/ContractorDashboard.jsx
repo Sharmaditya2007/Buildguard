@@ -91,31 +91,31 @@ export const ContractorDashboard = ({ onNavigate }) => {
           value={String(stats.totalDeliveries || 10)}
           subtitle={`${stats.verifiedDeliveries || 9} AI verified`}
           icon={ShieldCheck}
-          iconBg="bg-emerald-50 text-emerald-600 border border-emerald-200/80"
+          iconBg="bg-emerald-950/40 text-emerald-400 border border-emerald-800/60"
         />
         <StatCard
           title="Requisitions"
           value={String(stats.pendingApprovals || 1)}
           subtitle="Awaiting homeowner"
           icon={Clock}
-          iconBg="bg-amber-50 text-amber-700 border border-amber-200"
+          iconBg="bg-amber-950/40 text-amber-400 border border-amber-800/60"
         />
         <StatCard
           title="Current Stage"
           value={`${stats.completionPercentage || 45}%`}
           subtitle={stats.currentStage || 'Framing & Structure'}
           icon={Layers}
-          iconBg="bg-blue-50 text-blue-600 border border-blue-200/80"
+          iconBg="bg-blue-950/40 text-blue-400 border border-blue-800/60"
         />
       </div>
 
       {/* WhatsApp-Style Big Contractor Actions (High Priority on Jobsite) */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white font-heading">
+          <h3 className="text-lg md:text-xl font-bold text-white font-heading">
             On-Site Job Actions
           </h3>
-          <span className="text-xs text-slate-400 dark:text-slate-400 font-medium">Touch-friendly 1-tap logging</span>
+          <span className="text-xs text-slate-400 font-medium">Touch-friendly 1-tap logging</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -123,7 +123,7 @@ export const ContractorDashboard = ({ onNavigate }) => {
             title="1. Log Material Delivery"
             subtitle="Snap arrival photo & record count"
             icon={Camera}
-            iconBg="bg-amber-100 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300"
+            iconBg="bg-amber-950/50 text-amber-300"
             onClick={() => onNavigate('upload-material')}
           />
 
@@ -131,7 +131,7 @@ export const ContractorDashboard = ({ onNavigate }) => {
             title="2. Post Site Progress"
             subtitle="Upload daily milestone photos"
             icon={Layers}
-            iconBg="bg-emerald-100 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300"
+            iconBg="bg-emerald-950/50 text-emerald-300"
             onClick={() => onNavigate('upload-progress')}
           />
 
@@ -139,32 +139,32 @@ export const ContractorDashboard = ({ onNavigate }) => {
             title="3. Request Materials"
             subtitle="Submit requisition with instant AI check"
             icon={PackagePlus}
-            iconBg="bg-blue-100 dark:bg-blue-950/50 text-blue-800 dark:text-blue-300"
+            iconBg="bg-blue-950/50 text-blue-300"
             onClick={() => onNavigate('request-material')}
           />
         </div>
       </div>
 
       {/* Recent On-Site Tasks */}
-      <Card className="p-5 md:p-6 space-y-4">
+      <Card className="p-5 md:p-6 space-y-4 bg-slate-900/90 border border-slate-800">
         <div className="flex items-center justify-between">
-          <h3 className="text-base md:text-lg font-bold text-slate-900 dark:text-white">
+          <h3 className="text-base md:text-lg font-bold text-white">
             Recent On-Site Submissions
           </h3>
-          <span className="text-xs text-slate-400 dark:text-slate-400 font-medium">All items recorded to digital ledger</span>
+          <span className="text-xs text-slate-400 font-medium">All items recorded to digital ledger</span>
         </div>
 
-        <div className="divide-y divide-slate-100 dark:divide-slate-800 space-y-3">
+        <div className="divide-y divide-slate-800 space-y-3">
           <div className="pt-3 flex items-center justify-between gap-3 text-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60 flex items-center justify-center font-bold flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-emerald-950/50 text-emerald-400 border border-emerald-800/60 flex items-center justify-center font-bold flex-shrink-0">
                 <CheckCircle2 className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-bold text-slate-900 dark:text-white block">
+                <span className="font-bold text-white block">
                   Delivery Logged: 150 Bags UltraTech Cement
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">
+                <span className="text-xs text-slate-400">
                   AI Computer Vision: Verified with 96% confidence
                 </span>
               </div>
@@ -174,14 +174,14 @@ export const ContractorDashboard = ({ onNavigate }) => {
 
           <div className="pt-3 flex items-center justify-between gap-3 text-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/60 flex items-center justify-center font-bold flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-blue-950/50 text-blue-400 border border-blue-800/60 flex items-center justify-center font-bold flex-shrink-0">
                 <Layers className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-bold text-slate-900 dark:text-white block">
+                <span className="font-bold text-white block">
                   Site Photos: Framing & Pillars Inspection
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">
+                <span className="text-xs text-slate-400">
                   AI detected milestone: 45% Framing complete
                 </span>
               </div>
@@ -191,14 +191,14 @@ export const ContractorDashboard = ({ onNavigate }) => {
 
           <div className="pt-3 flex items-center justify-between gap-3 text-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 flex items-center justify-center font-bold flex-shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-amber-950/50 text-amber-400 border border-amber-800/60 flex items-center justify-center font-bold flex-shrink-0">
                 <Clock className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-bold text-slate-900 dark:text-white block">
+                <span className="font-bold text-white block">
                   Requisition: 250 Bags Cement for Next Week
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400">
+                <span className="text-xs text-slate-400">
                   Pending homeowner review note
                 </span>
               </div>

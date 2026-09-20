@@ -28,18 +28,18 @@ export const ProgressBar = ({
       {(label || showPercentage) && (
         <div className="flex items-center justify-between text-sm md:text-base">
           <div>
-            {label && <span className="font-bold text-slate-800">{label}</span>}
-            {subtitle && <span className="text-slate-500 ml-2 text-xs md:text-sm">({subtitle})</span>}
+            {label && <span className="font-bold text-slate-200">{label}</span>}
+            {subtitle && <span className="text-slate-400 ml-2 text-xs md:text-sm">({subtitle})</span>}
           </div>
           {showPercentage && (
-            <span className="font-extrabold text-slate-900 text-base md:text-lg">
+            <span className="font-extrabold text-white text-base md:text-lg">
               {clamped}%
             </span>
           )}
         </div>
       )}
 
-      <div className={`w-full bg-slate-100 rounded-full overflow-hidden border border-slate-200/60 ${heights[size] || heights.md}`}>
+      <div className={`w-full bg-slate-800 rounded-full overflow-hidden border border-slate-700/60 ${heights[size] || heights.md}`}>
         <div
           className={`h-full transition-all duration-500 ease-out rounded-full ${colors[color] || colors.brand}`}
           style={{ width: `${clamped}%` }}

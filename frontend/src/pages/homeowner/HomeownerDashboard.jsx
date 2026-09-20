@@ -198,7 +198,7 @@ export const HomeownerDashboard = ({ onNavigate }) => {
 
       {/* Inline AI Bag Counter Expandable */}
       {showInlineScanner && (
-        <Card className="p-5 sm:p-7 bg-white dark:bg-slate-900 border-2 border-amber-400/70 dark:border-amber-500/40 shadow-lg rounded-3xl animate-in fade-in duration-200">
+        <Card className="p-5 sm:p-7 bg-slate-900 border-2 border-amber-500/40 shadow-lg rounded-3xl animate-in fade-in duration-200">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
             <h4 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-base md:text-lg">
               <Camera className="w-5 h-5 text-amber-500" />

@@ -68,28 +68,28 @@ export const RequestMaterial = ({ onComplete }) => {
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white">
           Request Building Materials
         </h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1">
+        <p className="text-sm md:text-base text-slate-400 mt-1">
           Submit a supply requisition to the homeowner with instant pre-validation against civil guidelines.
         </p>
       </div>
 
       {submitted ? (
-        <Card className="p-8 text-center space-y-4 bg-emerald-50/70 border-emerald-200">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+        <Card className="p-8 text-center space-y-4 bg-emerald-950/30 border-emerald-800/60">
+          <div className="w-16 h-16 rounded-full bg-emerald-900/50 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-700/60">
             <CheckCircle2 className="w-10 h-10" />
           </div>
-          <h2 className="text-2xl font-bold text-emerald-950">
+          <h2 className="text-2xl font-bold text-emerald-300">
             Requisition Sent to Homeowner!
           </h2>
-          <p className="text-sm text-emerald-800 max-w-md mx-auto">
+          <p className="text-sm text-emerald-200/90 max-w-md mx-auto">
             The request for {quantity} {unit} of {materialType} is now awaiting 1-tap homeowner approval.
           </p>
         </Card>
       ) : (
-        <Card className="p-6 md:p-8 space-y-6">
+        <Card className="p-6 md:p-8 space-y-6 bg-slate-900/90 border border-slate-800">
           <div className="space-y-4">
             <Select
               label="1. Material Required"
@@ -118,12 +118,12 @@ export const RequestMaterial = ({ onComplete }) => {
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-sm font-semibold text-slate-800">
+              <label className="block text-sm font-semibold text-slate-200">
                 Purpose / Milestone Reason
               </label>
               <textarea
                 rows={3}
-                className="w-full p-3 text-base text-slate-900 bg-white border-2 border-slate-200 rounded-xl focus:border-amber-500 focus:outline-none placeholder:text-slate-400"
+                className="w-full p-3 text-base text-white bg-slate-850 border-2 border-slate-700 rounded-xl focus:border-amber-400 focus:outline-none placeholder:text-slate-500"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Briefly explain what this will be used for..."
@@ -139,7 +139,7 @@ export const RequestMaterial = ({ onComplete }) => {
             icon={Sparkles}
             loading={loadingAi}
             onClick={handleCheckNorms}
-            className="border-amber-400 text-amber-900 bg-amber-50/70 hover:bg-amber-100"
+            className="border-amber-500/40 text-amber-300 bg-amber-950/30 hover:bg-amber-900/40"
           >
             Check Against Standard Stage Guidelines
           </Button>
@@ -148,8 +148,8 @@ export const RequestMaterial = ({ onComplete }) => {
           {aiAnalysis && (
             <div className={`p-4 rounded-2xl border space-y-2 animate-fadeIn ${
               aiAnalysis.status === 'NORMAL'
-                ? 'bg-emerald-50 border-emerald-200 text-emerald-950'
-                : 'bg-amber-50 border-amber-200 text-amber-950'
+                ? 'bg-emerald-950/30 border-emerald-800/60 text-emerald-200'
+                : 'bg-amber-950/30 border-amber-800/60 text-amber-200'
             }`}>
               <div className="flex items-center justify-between">
                 <Badge
@@ -159,7 +159,7 @@ export const RequestMaterial = ({ onComplete }) => {
                 >
                   {aiAnalysis.status === 'NORMAL' ? 'Standard Stage Amount' : 'Higher Than Typical'}
                 </Badge>
-                <span className="text-xs font-bold uppercase tracking-wider">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                   AI Neutral Review
                 </span>
               </div>

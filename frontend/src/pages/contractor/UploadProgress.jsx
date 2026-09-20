@@ -63,35 +63,35 @@ export const UploadProgress = ({ onComplete }) => {
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+        <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white">
           Post Site Progress Update
         </h1>
-        <p className="text-sm md:text-base text-slate-500 mt-1">
+        <p className="text-sm md:text-base text-slate-400 mt-1">
           Share real-time site photos with the homeowner to showcase daily milestone progress.
         </p>
       </div>
 
       {submitted ? (
-        <Card className="p-8 text-center space-y-4 bg-emerald-50/70 border-emerald-200">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+        <Card className="p-8 text-center space-y-4 bg-emerald-950/30 border-emerald-800/60">
+          <div className="w-16 h-16 rounded-full bg-emerald-900/50 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-700/60">
             <CheckCircle2 className="w-10 h-10" />
           </div>
-          <h2 className="text-2xl font-bold text-emerald-950">
+          <h2 className="text-2xl font-bold text-emerald-300">
             Progress Update Published!
           </h2>
-          <p className="text-sm text-emerald-800 max-w-md mx-auto">
+          <p className="text-sm text-emerald-200/90 max-w-md mx-auto">
             The milestone update for {currentStage} has been added to the homeowner's visual timeline.
           </p>
         </Card>
       ) : (
-        <Card className="p-6 md:p-8 space-y-6">
+        <Card className="p-6 md:p-8 space-y-6 bg-slate-900/90 border border-slate-800">
           {/* Step 1: Photos */}
           <div className="space-y-2">
-            <label className="block text-sm md:text-base font-semibold text-slate-800">
+            <label className="block text-sm md:text-base font-semibold text-slate-200">
               1. Site Progress Photos
             </label>
 
-            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 border-2 border-slate-300">
+            <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-850 border-2 border-slate-700">
               <img
                 src={photos[0]}
                 alt="Site Preview"
@@ -102,7 +102,7 @@ export const UploadProgress = ({ onComplete }) => {
                   variant="outline"
                   size="sm"
                   onClick={() => setPhotos(['https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=800&auto=format&fit=crop&q=60'])}
-                  className="bg-white/90 text-xs"
+                  className="bg-slate-900/90 text-white border-slate-700 text-xs"
                 >
                   Switch Photo
                 </Button>
@@ -120,12 +120,12 @@ export const UploadProgress = ({ onComplete }) => {
             />
 
             <div className="space-y-1.5">
-              <label className="block text-sm font-semibold text-slate-800">
+              <label className="block text-sm font-semibold text-slate-200">
                 Site Supervisor Notes
               </label>
               <textarea
                 rows={3}
-                className="w-full p-3 text-base text-slate-900 bg-white border-2 border-slate-200 rounded-xl focus:border-amber-500 focus:outline-none placeholder:text-slate-400"
+                className="w-full p-3 text-base text-white bg-slate-850 border-2 border-slate-700 rounded-xl focus:border-amber-400 focus:outline-none placeholder:text-slate-500"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Describe today's completed work in simple terms..."
@@ -141,19 +141,19 @@ export const UploadProgress = ({ onComplete }) => {
             icon={Sparkles}
             loading={loadingAi}
             onClick={handleRunAiAnalysis}
-            className="border-amber-400 text-amber-900 bg-amber-50/70 hover:bg-amber-100"
+            className="border-amber-500/40 text-amber-300 bg-amber-950/30 hover:bg-amber-900/40"
           >
             Run AI Stage & Progress Analysis
           </Button>
 
           {/* AI Result Card */}
           {aiResult && (
-            <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-3 animate-fadeIn">
+            <div className="p-4 rounded-2xl bg-amber-950/30 border border-amber-800/50 space-y-3 animate-fadeIn">
               <div className="flex items-center justify-between">
                 <Badge variant="brand" size="sm" icon={Layers}>
                   AI Detected: {aiResult.stage}
                 </Badge>
-                <span className="text-sm font-extrabold text-amber-900">
+                <span className="text-sm font-extrabold text-amber-300">
                   {aiResult.progressPercentage}% Complete
                 </span>
               </div>
@@ -164,7 +164,7 @@ export const UploadProgress = ({ onComplete }) => {
                 color="brand"
               />
 
-              <p className="text-sm text-amber-950 font-medium">
+              <p className="text-sm text-amber-200 font-medium">
                 "{aiResult.summary}"
               </p>
             </div>

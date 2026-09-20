@@ -7,7 +7,7 @@ export const StatCard = ({
   subtitle,
   icon: Icon,
   badge,
-  iconBg = 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/40',
+  iconBg = 'bg-amber-950/40 text-amber-400 border border-amber-800/40',
   className = '',
   onClick,
 }) => {
@@ -19,17 +19,17 @@ export const StatCard = ({
     >
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
-          <p className="text-sm font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          <p className="text-sm font-semibold uppercase tracking-wider text-slate-400">
             {title}
           </p>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <span className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
               {value}
             </span>
             {badge && <div>{badge}</div>}
           </div>
           {subtitle && (
-            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 pt-0.5 font-medium">
+            <p className="text-xs md:text-sm text-slate-400 pt-0.5 font-medium">
               {subtitle}
             </p>
           )}

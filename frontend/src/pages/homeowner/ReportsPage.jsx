@@ -130,7 +130,7 @@ export const ReportsPage = () => {
       </div>
 
       {/* Formal Audit Document Card */}
-      <Card className="p-6 md:p-10 space-y-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+      <Card className="p-6 md:p-10 space-y-8 bg-slate-900 border border-slate-800">
         {/* Document Header */}
         <div className="flex items-start justify-between border-b pb-6 border-slate-200 dark:border-slate-800 gap-4">
           <div>

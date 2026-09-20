@@ -49,8 +49,8 @@ export const PhotoGalleryCard = ({
           </div>
 
           {/* Tap to view overlay */}
-          <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-            <span className="bg-white/95 text-slate-900 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-lg">
+          <div className="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <span className="bg-slate-900/95 text-white border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-lg">
               <Eye className="w-3.5 h-3.5" /> Tap to zoom
             </span>
           </div>
@@ -60,25 +60,25 @@ export const PhotoGalleryCard = ({
         <div className="pt-3 flex-1 flex flex-col justify-between">
           <div>
             <div className="flex items-start justify-between gap-2">
-              <h4 className="font-bold text-base md:text-lg text-slate-900 dark:text-white line-clamp-1">
+              <h4 className="font-bold text-base md:text-lg text-white line-clamp-1">
                 {title}
               </h4>
               {metricValue && (
-                <span className="text-xs md:text-sm font-extrabold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2 py-0.5 rounded-md flex-shrink-0">
+                <span className="text-xs md:text-sm font-extrabold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-md flex-shrink-0">
                   {metricValue}
                 </span>
               )}
             </div>
 
             {subtitle && (
-              <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+              <p className="text-xs md:text-sm text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                 {subtitle}
               </p>
             )}
           </div>
 
           {/* Footer Metadata */}
-          <div className="pt-3 mt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400 dark:text-slate-500 font-medium">
+          <div className="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-medium">
             <span className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5" />
               {date ? new Date(date).toLocaleDateString() : 'Today'}
@@ -102,7 +102,7 @@ export const PhotoGalleryCard = ({
         maxWidth="max-w-2xl"
       >
         <div className="space-y-4">
-          <div className="w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-black">
+          <div className="w-full rounded-2xl overflow-hidden border border-slate-800 bg-black">
             <img
               src={imageUrl || 'https://images.unsplash.com/photo-1541888946425-d0fbb180c5f2?w=1200&auto=format&fit=crop&q=80'}
               alt={title}
@@ -111,8 +111,8 @@ export const PhotoGalleryCard = ({
           </div>
 
           {statusNote && (
-            <div className="bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-slate-800 p-4 rounded-xl text-sm md:text-base text-slate-700 dark:text-slate-300">
-              <span className="font-bold text-slate-900 dark:text-white block mb-1">AI Inspection Summary:</span>
+            <div className="bg-slate-850 border border-slate-800 p-4 rounded-xl text-sm md:text-base text-slate-300">
+              <span className="font-bold text-white block mb-1">AI Inspection Summary:</span>
               <p>{statusNote}</p>
             </div>
           )}

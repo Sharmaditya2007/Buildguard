@@ -130,10 +130,10 @@ export default function App() {
             <div className="max-w-4xl mx-auto space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-slate-900">
+                  <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-white">
                     Upload Image to Check (AI Bag Counter)
                   </h1>
-                  <p className="text-sm md:text-base text-slate-500 mt-1">
+                  <p className="text-sm md:text-base text-slate-400 mt-1">
                     Upload any delivery photo from your phone or computer to automatically count cement bags and audit quantities.
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export default function App() {
                   ← Back to Home
                 </Button>
               </div>
-              <Card className="p-5 sm:p-8 bg-white border border-slate-200 shadow-sm rounded-3xl">
+              <Card className="p-5 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-sm rounded-3xl">
                 <AiBagCounter />
               </Card>
             </div>
