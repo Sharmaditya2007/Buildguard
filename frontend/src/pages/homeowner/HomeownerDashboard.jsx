@@ -18,8 +18,10 @@ import {
   Calendar
 } from 'lucide-react';
 import { apiClient } from '../../services/api';
+import { AiBagCounter } from '../../components/common/AiBagCounter';
 
 export const HomeownerDashboard = ({ onNavigate }) => {
+  const [showInlineScanner, setShowInlineScanner] = useState(false);
   const [data, setData] = useState({
     projectName: 'Greenwood Villa B-4',
     currentStage: 'Framing & Structure',
@@ -134,17 +136,49 @@ export const HomeownerDashboard = ({ onNavigate }) => {
           </div>
         </div>
 
-        <Button
-          variant="primary"
-          size="lg"
-          className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none shadow-md cursor-pointer self-start md:self-auto flex-shrink-0"
-          onClick={() => onNavigate('check-image')}
-        >
-          <Camera className="w-5 h-5" />
-          Upload Image to Check
-          <ArrowRight className="w-4 h-4 ml-1" />
-        </Button>
+        <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto flex-shrink-0">
+          <Button
+            variant={showInlineScanner ? 'outline' : 'secondary'}
+            size="md"
+            className="cursor-pointer"
+            onClick={() => setShowInlineScanner(!showInlineScanner)}
+          >
+            {showInlineScanner ? 'Hide Scanner' : 'Quick Preview'}
+          </Button>
+
+          <Button
+            variant="primary"
+            size="md"
+            className="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold border-none shadow-md cursor-pointer"
+            onClick={() => onNavigate('check-image')}
+          >
+            <Camera className="w-5 h-5" />
+            Upload Image to Check
+            <ArrowRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
       </div>
+
+      {/* Inline AI Bag Counter Expandable */}
+      {showInlineScanner && (
+        <Card className="p-5 sm:p-7 bg-white border-2 border-amber-400/70 shadow-lg rounded-3xl animate-in fade-in duration-200">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+            <h4 className="font-bold text-slate-900 flex items-center gap-2 text-base md:text-lg">
+              <Camera className="w-5 h-5 text-amber-500" />
+              Direct AI Bag Counter & Visual Check
+            </h4>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowInlineScanner(false)}
+              className="cursor-pointer text-slate-500 hover:text-slate-800"
+            >
+              ✕ Close
+            </Button>
+          </div>
+          <AiBagCounter initialImage="/cement-5-bags.jpg" />
+        </Card>
+      )}
 
       {/* Trust Gauge & Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

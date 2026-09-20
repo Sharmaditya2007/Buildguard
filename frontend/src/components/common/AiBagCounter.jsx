@@ -47,6 +47,7 @@ export const AiBagCounter = ({
   );
   
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
   const imageRef = useRef(null);
 
   // Analyze image on upload or sample select
@@ -55,7 +56,9 @@ export const AiBagCounter = ({
     setFileName(customName);
 
     const img = new Image();
-    img.crossOrigin = 'anonymous';
+    if (src && src.startsWith('http') && !src.includes(window.location.hostname)) {
+      img.crossOrigin = 'anonymous';
+    }
     img.src = src;
 
     img.onload = () => {
@@ -235,6 +238,23 @@ export const AiBagCounter = ({
       }
     };
     reader.readAsDataURL(file);
+    e.target.value = '';
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer?.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target?.result;
+        if (dataUrl) {
+          setImageSrc(dataUrl);
+          analyzeImageContent(dataUrl, file.name);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // Adjust count manually if user knows exact invoice number
@@ -255,14 +275,23 @@ export const AiBagCounter = ({
             Delivery Image & AI Bag Counter
           </label>
           <p className="text-xs text-slate-500">
-            Upload your site photo or click a sample to watch the AI count visible bags.
+            Upload your site photo, click camera, or select a sample to watch the AI count visible bags.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
+          {/* File picker for desktop & gallery */}
           <input
             type="file"
             ref={fileInputRef}
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          {/* Direct camera capture for mobile devices */}
+          <input
+            type="file"
+            ref={cameraInputRef}
             accept="image/*"
             capture="environment"
             className="hidden"
@@ -274,17 +303,17 @@ export const AiBagCounter = ({
             size="sm"
             icon={Upload}
             onClick={() => fileInputRef.current?.click()}
-            className="shadow-sm"
+            className="shadow-sm cursor-pointer font-bold"
           >
-            Upload My Photo
+            Upload Photo
           </Button>
 
           <Button
             variant="outline"
             size="sm"
             icon={Camera}
-            onClick={() => fileInputRef.current?.click()}
-            className="hidden sm:inline-flex"
+            onClick={() => cameraInputRef.current?.click()}
+            className="cursor-pointer"
           >
             Camera
           </Button>
@@ -292,7 +321,13 @@ export const AiBagCounter = ({
       </div>
 
       {/* Main Visual Preview Area with AI Bounding Boxes */}
-      <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-950 border-2 border-slate-300 shadow-md group select-none">
+      <div
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={handleDrop}
+        className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-950 border-2 border-slate-300 shadow-md group select-none cursor-pointer"
+        onClick={() => fileInputRef.current?.click()}
+        title="Click or drag an image here to upload and check"
+      >
         <img
           ref={imageRef}
           src={imageSrc}

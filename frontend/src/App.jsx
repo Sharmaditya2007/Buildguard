@@ -20,6 +20,10 @@ import { UploadMaterial } from './pages/contractor/UploadMaterial';
 import { UploadProgress } from './pages/contractor/UploadProgress';
 import { RequestMaterial } from './pages/contractor/RequestMaterial';
 
+import { Card } from './components/ui/Card';
+import { Button } from './components/ui/Button';
+import { AiBagCounter } from './components/common/AiBagCounter';
+
 // Navigation Icons
 import {
   LayoutDashboard,
