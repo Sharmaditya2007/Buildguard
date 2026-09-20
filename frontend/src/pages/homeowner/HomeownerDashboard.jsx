@@ -134,6 +134,22 @@ export const HomeownerDashboard = ({ onNavigate }) => {
         <p className="text-xs md:text-sm text-slate-300 bg-slate-800/80 p-3.5 rounded-2xl border border-slate-700/60 leading-relaxed">
           <span className="font-bold text-amber-400">AI Site Summary:</span> {data.aiSummary}
         </p>
+
+        {/* 3-Point Explanatory Pillars */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs text-slate-300 border-t border-slate-750">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span><strong>Trust Score:</strong> 90% verified deliveries</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span><strong>Computer Vision:</strong> Automated bag counts</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+            <span><strong>Neutral Advisory:</strong> Zero-blame reviews</span>
+          </div>
+        </div>
       </div>
 
       {/* Upload Image to Check - AI Bag Counter Banner */}
