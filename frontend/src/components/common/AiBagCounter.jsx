@@ -326,35 +326,10 @@ export const AiBagCounter = ({
             </Button>
           </div>
 
-          <div className="mt-8 pt-5 border-t border-amber-200/80 w-full max-w-lg">
-            <span className="text-xs font-bold text-slate-500 block mb-2.5">
-              Or test with a sample photo:
-            </span>
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setImageSrc('/cement-5-bags.jpg');
-                  analyzeImageContent('/cement-5-bags.jpg', '5_Cement_Bags_Delivery.jpg', true);
-                }}
-                className="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold rounded-xl shadow-xs transition cursor-pointer"
-              >
-                ⭐ 5 Bags Photo Sample
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setImageSrc('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60');
-                  analyzeImageContent('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60', 'Cement_Pallet_150.jpg', false);
-                }}
-                className="px-3.5 py-1.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-medium rounded-xl shadow-2xs transition cursor-pointer"
-              >
-                Pallet (150 Bags)
-              </button>
-            </div>
-          </div>
+          <p className="text-xs text-slate-400 mt-6 flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 inline" />
+            Supports JPG, PNG, WEBP delivery photos directly from your phone camera or computer.
+          </p>
         </div>
       ) : (
         /* State 2: Shown ONLY AFTER uploading the image */
@@ -496,42 +471,13 @@ export const AiBagCounter = ({
 
         {/* Bottom File Info Bar */}
         <div className="absolute bottom-2 left-2 right-2 bg-slate-900/80 backdrop-blur text-white text-xs px-3 py-1.5 rounded-xl flex items-center justify-between z-20">
-          <span className="truncate max-w-[200px] text-slate-300 font-mono text-[11px]">
-            {fileName || 'Preset: UltraTech Cement Pallet'}
+          <span className="truncate max-w-[250px] text-slate-300 font-mono text-[11px]">
+            {fileName || 'Delivery Site Inspection Photo'}
           </span>
           <span className="font-bold text-amber-400">
             {boundingBoxes.length} visible bags tracked
           </span>
         </div>
-      </div>
-
-      {/* Quick Test Sample Photos */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs text-slate-500">
-        <span className="font-bold flex-shrink-0 text-slate-600">Sample Photos:</span>
-        <button
-          onClick={() => analyzeImageContent('/cement-5-bags.jpg', '5_Cement_Bags_Delivery.jpg')}
-          className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold rounded-lg transition cursor-pointer flex-shrink-0 shadow-xs flex items-center gap-1"
-        >
-          ⭐ 5 Bags (Your Photo)
-        </button>
-        <button
-          onClick={() => analyzeImageContent('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&auto=format&fit=crop&q=60', 'Cement_Pallet_150.jpg')}
-          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-medium transition cursor-pointer flex-shrink-0"
-        >
-          Pallet (150 Bags)
-        </button>
-        <button
-          onClick={() => analyzeImageContent('https://images.unsplash.com/photo-1541888946425-d0fbb180c5f2?w=800&auto=format&fit=crop&q=60', 'Jobsite_Storage_Bags.jpg')}
-          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-medium transition cursor-pointer flex-shrink-0"
-        >
-          Site Stack (80 Bags)
-        </button>
-        <button
-          onClick={() => analyzeImageContent('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&auto=format&fit=crop&q=60', 'TMT_Steel_Trailer.jpg')}
-          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg font-medium transition cursor-pointer flex-shrink-0"
-        >
-          Steel Trailer
-        </button>
       </div>
 
       {/* AI Count Summary Card */}
