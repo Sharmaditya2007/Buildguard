@@ -11,10 +11,8 @@ const connectDB = async () => {
   } catch (error) {
     console.error(`[MongoDB Connection Error]: ${error.message}`);
     console.log(`[MongoDB Tip]: Set your MongoDB Atlas connection string in .env (MONGO_URI)`);
-    // In production, exit on DB failure
-    if (process.env.NODE_ENV === 'production') {
-      process.exit(1);
-    }
+    console.warn(`[MongoDB Warning]: Server running in resilient mode without active database connection.`);
+    console.log(`[MongoDB Tip]: Set your real MongoDB Atlas connection string in Render environment variables (MONGO_URI)`);
   }
 };
 
