@@ -1,0 +1,44 @@
+{
+  "name": "buildguard-ai-backend",
+  "version": "1.0.0",
+  "description": "AI-powered construction transparency platform backend architecture",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "build:frontend": "npm --prefix frontend install && npm --prefix frontend run build",
+    "build": "npm run build:frontend",
+    "test": "node test/aiServiceTest.js && node test/contractorApiTest.js && node test/homeownerApiTest.js",
+    "test:ai": "node test/aiServiceTest.js",
+    "test:contractor": "node test/contractorApiTest.js",
+    "test:homeowner": "node test/homeownerApiTest.js"
+  },
+  "keywords": [
+    "construction",
+    "ai",
+    "transparency",
+    "express",
+    "mongodb",
+    "jwt",
+    "cloudinary"
+  ],
+  "author": "BuildGuard AI Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^7.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "supertest": "^7.2.2"
+  }
+}

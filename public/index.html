@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildGuard AI | Construction Transparency & Contractor Portal</title>
+  <meta name="description" content="AI-Powered Construction Transparency Platform ensuring real-time verification and trust between homeowners and contractors.">
+  
+  <!-- Modern Typography Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-icon">🛡️</div>
+      <div class="brand-text">BuildGuard <span>AI</span></div>
+    </div>
+
+    <div class="nav-actions">
+      <!-- Live Server Health Badge -->
+      <div class="badge-live" id="server-status-badge">
+        <div class="badge-pulse"></div>
+        <span id="server-status-text">Backend Online :5000</span>
+      </div>
+
+      <!-- Role Mode Switcher -->
+      <div class="role-pill">
+        <button class="role-btn active" id="btn-role-contractor" onclick="switchRole('contractor')">Contractor Portal</button>
+        <button class="role-btn" id="btn-role-homeowner" onclick="switchRole('homeowner')">Homeowner View</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Banner -->
+    <section class="hero">
+      <div class="hero-tag">✨ AI-Powered Construction Intelligence & Oversight</div>
+      <h1 class="hero-title">Total Transparency for <span class="hero-gradient">Modern Construction</span></h1>
+      <p class="hero-desc">
+        Eliminate disputes, verify material deliveries with computer vision, detect milestone stages from site photos, and prevent excessive requisitions before they happen.
+      </p>
+    </section>
+
+    <!-- Key Metrics Ribbon -->
+    <div class="metrics-row">
+      <div class="glass-panel metric-card">
+        <div class="metric-num" style="color: var(--accent-cyan);">100%</div>
+        <div class="metric-label">AI Visual Verification</div>
+      </div>
+      <div class="glass-panel metric-card">
+        <div class="metric-num" style="color: var(--accent-purple);">0.95+</div>
+        <div class="metric-label">Model Confidence Score</div>
+      </div>
+      <div class="glass-panel metric-card">
+        <div class="metric-num" style="color: var(--accent-emerald);">Active</div>
+        <div class="metric-label">Cloudinary Media Pipeline</div>
+      </div>
+      <div class="glass-panel metric-card">
+        <div class="metric-num" style="color: var(--accent-amber);">Real-Time</div>
+        <div class="metric-label">Civil Quantity Auditing</div>
+      </div>
+    </div>
+
+    <!-- CONTRACTOR WORKSPACE SECTION -->
+    <section id="contractor-workspace">
+      
+      <!-- Feature Tabs Navigation -->
+      <div class="workspace-tabs">
+        <button class="tab-link active" onclick="switchTab('projects-tab')">📂 1. Assigned Projects</button>
+        <button class="tab-link" onclick="switchTab('materials-tab')">📦 2. Upload Material Delivery</button>
+        <button class="tab-link" onclick="switchTab('progress-tab')">📸 3. Upload Site Progress</button>
+        <button class="tab-link" onclick="switchTab('requisition-tab')">📝 4. Create Material Request</button>
+        <button class="tab-link" onclick="switchTab('audit-tab')">📊 5. Previous Uploads</button>
+      </div>
+
+      <!-- TAB 1: Assigned Projects -->
+      <div class="tab-content active" id="projects-tab">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.4rem;">Assigned Projects</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Construction sites actively under your management</p>
+          </div>
+          <button class="btn btn-primary" style="width: auto; padding: 0.5rem 1.25rem;" onclick="loadContractorProjects()">🔄 Refresh from API</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;" id="project-cards-container">
+          <!-- Sample Live Project Card -->
+          <div class="glass-panel" style="padding: 1.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+              <div>
+                <h3 style="font-size: 1.2rem; font-family: var(--font-heading);">Greenwood Villa Villa-B4</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">📍 Sector 42, Golf Course Ext, Gurgaon</p>
+              </div>
+              <span class="status-badge status-verified">In Progress</span>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                <span style="color: var(--text-secondary);">Area:</span>
+                <strong>2,400 sqft</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                <span style="color: var(--text-secondary);">Budget:</span>
+                <strong style="color: var(--accent-emerald);">$145,000</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                <span style="color: var(--text-secondary);">Homeowner:</span>
+                <strong>Alice Homeowner (alice@home.com)</strong>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 0.5rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem;">
+                <span style="color: var(--text-secondary);">Stage: <strong>Framing & Structure</strong></span>
+                <span style="color: var(--accent-cyan); font-weight: 700;">45%</span>
+              </div>
+              <div class="confidence-bar-bg" style="margin: 0;">
+                <div class="confidence-bar-fill" style="width: 45%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Card 2 -->
+          <div class="glass-panel" style="padding: 1.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+              <div>
+                <h3 style="font-size: 1.2rem; font-family: var(--font-heading);">Skyline Penthouse 18C</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">📍 Indiranagar 100ft Road, Bengaluru</p>
+              </div>
+              <span class="status-badge status-review">Finishing</span>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                <span style="color: var(--text-secondary);">Area:</span>
+                <strong>3,100 sqft</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                <span style="color: var(--text-secondary);">Budget:</span>
+                <strong style="color: var(--accent-emerald);">$210,000</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                <span style="color: var(--text-secondary);">Homeowner:</span>
+                <strong>David Miller (david@example.com)</strong>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 0.5rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem;">
+                <span style="color: var(--text-secondary);">Stage: <strong>Plumbing & Electrical</strong></span>
+                <span style="color: var(--accent-cyan); font-weight: 700;">72%</span>
+              </div>
+              <div class="confidence-bar-bg" style="margin: 0;">
+                <div class="confidence-bar-fill" style="width: 72%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: Upload Material Delivery -->
+      <div class="tab-content" id="materials-tab">
+        <div class="grid-2">
+          
+          <!-- Upload Form -->
+          <div class="glass-panel form-card">
+            <h2 class="form-title">Upload Material Delivery Proof</h2>
+            <p class="form-subtitle">Upload site invoice/photo. Our AI models will cross-verify quantity and material authenticity.</p>
+
+            <form id="material-delivery-form" onsubmit="handleMaterialUpload(event)">
+              <div class="form-group">
+                <label class="form-label">Select Project</label>
+                <select class="form-select" id="mat-project-id">
+                  <option value="65f1234567890abcdef12345">Greenwood Villa Villa-B4 (2,400 sqft)</option>
+                  <option value="65f9999999999abcdef99999">Skyline Penthouse 18C (3,100 sqft)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Material Type</label>
+                <select class="form-select" id="mat-type">
+                  <option value="UltraTech 53 Grade Cement">UltraTech 53 Grade Cement (Bags)</option>
+                  <option value="Tata Tiscon TMT Steel Rebars">Tata Tiscon TMT Steel Rebars (kg)</option>
+                  <option value="Red Clay Standard Bricks">Red Clay Standard Bricks (Pieces)</option>
+                  <option value="River Sand Fine Aggregate">River Sand Fine Aggregate (cuft)</option>
+                  <option value="Asian Paints Apex Exterior">Asian Paints Apex Exterior (Liters)</option>
+                </select>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;" class="form-group">
+                <div>
+                  <label class="form-label">Delivered Quantity</label>
+                  <input type="number" class="form-input" id="mat-qty" value="150" min="1" required>
+                </div>
+                <div>
+                  <label class="form-label">Unit</label>
+                  <input type="text" class="form-input" id="mat-unit" value="bags" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Material Photo / Invoice</label>
+                <div class="dropzone" onclick="document.getElementById('mat-file').click()">
+                  <div class="dropzone-icon">📷</div>
+                  <div class="dropzone-text" id="mat-file-label">Click or Drag & Drop Delivery Image</div>
+                  <div class="dropzone-sub">Supports JPEG, PNG, WebP (Auto Cloudinary Sync)</div>
+                  <input type="file" id="mat-file" accept="image/*" style="display: none;" onchange="updateFileLabel('mat-file', 'mat-file-label')">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" id="btn-mat-submit">
+                <span>⚡ Upload & Run AI Inspection</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- AI Live Inspection Result Display -->
+          <div class="glass-panel ai-card" id="ai-inspection-panel">
+            <div class="ai-header">
+              <div class="ai-tag">
+                <span style="font-size: 1.25rem;">🤖</span>
+                <span>AI Vision Audit Engine</span>
+              </div>
+              <span class="status-badge status-verified" id="ai-mat-status">Verified</span>
+            </div>
+
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Confidence Score:</p>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
+              <span id="ai-conf-percent">96%</span>
+              <span style="color: var(--accent-emerald);">High Accuracy</span>
+            </div>
+            <div class="confidence-bar-bg">
+              <div class="confidence-bar-fill" id="ai-conf-bar" style="width: 96%;"></div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--border-glass);">
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem;">AUDIT REMARKS:</div>
+              <div style="font-size: 0.9rem; color: var(--text-primary);" id="ai-mat-notes">
+                AI visual inspection completed. Detected UltraTech Cement packaging stamps and bag count consistency matching the delivery quantity within 4% tolerance.
+              </div>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem;">CLOUDINARY SECURE URL:</div>
+            <div class="code-box" id="ai-mat-cloudinary">
+              https://res.cloudinary.com/buildguard-demo/image/upload/v1710000000/buildguard/projects/mat_65f.jpg
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 3: Upload Construction Progress -->
+      <div class="tab-content" id="progress-tab">
+        <div class="grid-2">
+          
+          <div class="glass-panel form-card">
+            <h2 class="form-title">Upload Construction Progress</h2>
+            <p class="form-subtitle">Submit multiple perspective site photos. AI models detect stage milestones and calculate percent completion.</p>
+
+            <form id="progress-upload-form" onsubmit="handleProgressUpload(event)">
+              <div class="form-group">
+                <label class="form-label">Project</label>
+                <select class="form-select" id="prog-project-id">
+                  <option value="65f1234567890abcdef12345">Greenwood Villa Villa-B4</option>
+                  <option value="65f9999999999abcdef99999">Skyline Penthouse 18C</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Contractor Site Notes</label>
+                <textarea class="form-textarea" rows="3" id="prog-notes" placeholder="e.g. Casting of 2nd floor roof slab completed with M25 concrete"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Site Perspective Photos (Up to 10)</label>
+                <div class="dropzone" onclick="document.getElementById('prog-files').click()">
+                  <div class="dropzone-icon">🏗️</div>
+                  <div class="dropzone-text" id="prog-files-label">Upload Site Angles / Photos</div>
+                  <div class="dropzone-sub">Supports multi-photo selection</div>
+                  <input type="file" id="prog-files" accept="image/*" multiple style="display: none;" onchange="updateMultiFileLabel('prog-files', 'prog-files-label')">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-purple" id="btn-prog-submit">
+                <span>🚀 Upload & Detect Progress Stage</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- AI Progress Detection Feedback -->
+          <div class="glass-panel ai-card">
+            <div class="ai-header">
+              <div class="ai-tag">
+                <span style="font-size: 1.25rem;">🔍</span>
+                <span>AI Milestone Classifier</span>
+              </div>
+              <span class="status-badge status-verified" id="ai-stage-badge">Framing & Structure</span>
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.35rem;">
+                <span>Estimated Completion:</span>
+                <strong style="color: var(--accent-purple); font-size: 1.1rem;" id="ai-prog-percentage">45%</strong>
+              </div>
+              <div class="confidence-bar-bg" style="height: 10px;">
+                <div class="confidence-bar-fill" id="ai-prog-bar" style="width: 45%; background: linear-gradient(90deg, #8b5cf6, #ec4899);"></div>
+              </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1rem; border: 1px solid var(--border-glass);">
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem;">EXECUTIVE SUMMARY:</div>
+              <div style="font-size: 0.9rem; line-height: 1.6;" id="ai-prog-summary">
+                AI Progress Inspection: Analyzed multi-angle perspectives. Current structural state aligns with 'Framing & Structure'. Reinforced concrete columns and beams verified. Milestone advance confirmed.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 4: Create Material Request -->
+      <div class="tab-content" id="requisition-tab">
+        <div class="grid-2">
+          
+          <div class="glass-panel form-card">
+            <h2 class="form-title">Submit Material Requisition</h2>
+            <p class="form-subtitle">Create material requests for homeowner review. AI automatically checks against civil engineering standard ratios.</p>
+
+            <form id="requisition-form" onsubmit="handleMaterialRequest(event)">
+              <div class="form-group">
+                <label class="form-label">Project</label>
+                <select class="form-select" id="req-project-id">
+                  <option value="65f1234567890abcdef12345">Greenwood Villa (2,400 sqft)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Material Name</label>
+                <input type="text" class="form-input" id="req-type" value="Cement" required>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem;" class="form-group">
+                <div>
+                  <label class="form-label">Quantity</label>
+                  <input type="number" class="form-input" id="req-qty" value="300" min="1" required>
+                </div>
+                <div>
+                  <label class="form-label">Unit</label>
+                  <input type="text" class="form-input" id="req-unit" value="bags" required>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669);">
+                <span>🛡️ Submit with AI Safety Check</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- AI Benchmark Results -->
+          <div class="glass-panel ai-card">
+            <div class="ai-header">
+              <div class="ai-tag">
+                <span style="font-size: 1.25rem;">📐</span>
+                <span>Civil Benchmark Auditor</span>
+              </div>
+              <span class="status-badge status-verified" id="req-ai-status">Approved</span>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1.25rem; border: 1px solid var(--border-glass);">
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.35rem;">AI AUDIT EVALUATION:</div>
+              <div style="font-size: 0.92rem; line-height: 1.6;" id="req-ai-reason">
+                Automated AI Audit: Requested 300 bags of Cement is consistent with normal consumption rates (threshold: 1,200 bags) for 2,400 sqft built-up area.
+              </div>
+            </div>
+
+            <div style="padding: 0.85rem; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); font-size: 0.85rem; color: #a7f3d0;">
+              ✅ Safe Requisition: Dispatched to Homeowner Portal for final approval.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB 5: View Previous Uploads -->
+      <div class="tab-content" id="audit-tab">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.4rem;">Historical Site Uploads</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Chronological log of verified deliveries and site progress photos</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="role-btn active" onclick="filterAudit('all')">All</button>
+            <button class="role-btn" onclick="filterAudit('materials')">Deliveries</button>
+            <button class="role-btn" onclick="filterAudit('progress')">Progress</button>
+          </div>
+        </div>
+
+        <div id="audit-list-container">
+          <!-- Sample Delivery Item -->
+          <div class="timeline-item glass-panel">
+            <div style="font-size: 2.2rem; display: flex; align-items: center;">📦</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                <h4 style="font-size: 1.05rem;">UltraTech 53 Grade Cement (150 bags)</h4>
+                <span class="status-badge status-verified">AI Verified (96%)</span>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Project: Greenwood Villa Villa-B4 • 2 hours ago</p>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                Cloudinary: <a href="#" style="color: var(--accent-cyan); text-decoration: none;">res.cloudinary.com/buildguard-demo/materials/cement_150.jpg</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sample Progress Item -->
+          <div class="timeline-item glass-panel">
+            <div style="font-size: 2.2rem; display: flex; align-items: center;">📸</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                <h4 style="font-size: 1.05rem;">Roof Slab Casting Perspective Update</h4>
+                <span class="status-badge" style="background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3);">Stage: Framing (45%)</span>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Project: Greenwood Villa Villa-B4 • Yesterday</p>
+              <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                Notes: "Casting of 2nd floor roof slab completed with M25 concrete"
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- HOMEOWNER PORTAL SECTION (Toggled via Role switch) -->
+    <section id="homeowner-workspace" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <div class="hero-tag" style="background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: #c084fc;">
+            👑 Homeowner Oversight & Governance
+          </div>
+          <h2 style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.25rem;">
+            Welcome, Alice <span style="font-weight: 400; font-size: 1.2rem; color: var(--text-muted);">(Verified Homeowner)</span>
+          </h2>
+          <p style="color: var(--text-secondary);">Real-time governance, AI anomaly audit, and approval portal</p>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem;">
+          <button class="btn btn-primary" style="width: auto; padding: 0.6rem 1.2rem;" onclick="switchHomeownerTab('ho-create-tab')">➕ Create Project</button>
+          <button class="btn btn-purple" style="width: auto; padding: 0.6rem 1.2rem;" onclick="switchHomeownerTab('ho-assign-tab')">🤝 Assign Contractor</button>
+        </div>
+      </div>
+
+      <!-- Homeowner Sub-tabs -->
+      <div class="workspace-tabs" style="margin-bottom: 2rem;">
+        <button class="tab-link active" onclick="switchHomeownerTab('ho-dashboard-tab')">📊 3. Project Dashboard</button>
+        <button class="tab-link" onclick="switchHomeownerTab('ho-materials-tab')">📦 4. Material History</button>
+        <button class="tab-link" onclick="switchHomeownerTab('ho-progress-tab')">📸 5. Progress History</button>
+        <button class="tab-link" onclick="switchHomeownerTab('ho-alerts-tab')">🚨 6. AI Alerts (1 Action Required)</button>
+        <button class="tab-link" onclick="switchHomeownerTab('ho-requests-tab')">📝 7 & 8. Material Approvals</button>
+      </div>
+
+      <!-- HO TAB 1: Create Project Form -->
+      <div class="ho-tab-content" id="ho-create-tab" style="display: none;">
+        <div class="glass-panel form-card" style="max-width: 650px; margin: 0 auto;">
+          <h2 class="form-title">Feature 1: Create New Construction Project</h2>
+          <p class="form-subtitle">Register a new home build or renovation site with area specifications.</p>
+          
+          <form onsubmit="handleCreateProject(event)">
+            <div class="form-group">
+              <label class="form-label">Project Name</label>
+              <input type="text" class="form-input" id="ho-new-name" value="Lakeside Modern Duplex" required>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="form-group">
+              <div>
+                <label class="form-label">Built-up Area (Sqft)</label>
+                <input type="number" class="form-input" id="ho-new-area" value="2800" min="100" required>
+              </div>
+              <div>
+                <label class="form-label">Budget ($)</label>
+                <input type="number" class="form-input" id="ho-new-budget" value="175000" min="1000" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Site Location</label>
+              <input type="text" class="form-input" id="ho-new-location" value="Lakeview Enclave, Block C, Austin, TX" required>
+            </div>
+            <button type="submit" class="btn btn-primary"><span>🚀 Create Project via API</span></button>
+          </form>
+        </div>
+      </div>
+
+      <!-- HO TAB 2: Assign Contractor -->
+      <div class="ho-tab-content" id="ho-assign-tab" style="display: none;">
+        <div class="glass-panel form-card" style="max-width: 650px; margin: 0 auto;">
+          <h2 class="form-title">Feature 2: Assign Contractor to Project</h2>
+          <p class="form-subtitle">Grant contractor role permissions to manage deliveries and progress uploads.</p>
+          
+          <form onsubmit="handleAssignContractor(event)">
+            <div class="form-group">
+              <label class="form-label">Select Project</label>
+              <select class="form-select" id="ho-assign-project-id">
+                <option value="65f1234567890abcdef12345">Greenwood Villa Villa-B4 (2,400 sqft)</option>
+                <option value="65f000000000000000000099">Lakeside Modern Duplex (2,800 sqft)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Assign Contractor</label>
+              <select class="form-select" id="ho-assign-contractor-id">
+                <option value="65f000000000000000000001">Apex Builders & Contractors (bob@apex.com)</option>
+                <option value="65f000000000000000000003">Skyline Infra Developers (contact@skyline.com)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-purple"><span>🤝 Assign Contractor via API</span></button>
+          </form>
+        </div>
+      </div>
+
+      <!-- HO TAB 3: Project Dashboard -->
+      <div class="ho-tab-content" id="ho-dashboard-tab">
+        <div class="grid-2">
+          <!-- Overview Card -->
+          <div class="glass-panel" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+              <div>
+                <span class="status-badge status-verified" style="margin-bottom: 0.5rem; display: inline-block;">Active Project</span>
+                <h3 style="font-size: 1.5rem; font-family: var(--font-heading);">Greenwood Villa Villa-B4</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">📍 Sector 42, Golf Course Ext, Gurgaon</p>
+              </div>
+              <div style="text-align: right;">
+                <div style="font-size: 0.8rem; color: var(--text-muted);">CURRENT STAGE</div>
+                <strong style="color: var(--accent-cyan); font-size: 1.1rem;">Framing & Structure</strong>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.4rem;">
+                <span>Overall Construction Progress:</span>
+                <strong style="color: var(--accent-cyan); font-size: 1.1rem;">45%</strong>
+              </div>
+              <div class="confidence-bar-bg" style="height: 10px;">
+                <div class="confidence-bar-fill" style="width: 45%;"></div>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; background: rgba(0,0,0,0.25); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-glass);">
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">BUILT-UP AREA</div>
+                <strong style="font-size: 1.1rem;">2,400 sqft</strong>
+              </div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">ALLOCATED BUDGET</div>
+                <strong style="font-size: 1.1rem; color: var(--accent-emerald);">$145,000</strong>
+              </div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">ASSIGNED CONTRACTOR</div>
+                <strong style="font-size: 0.95rem;">Apex Builders (Bob)</strong>
+              </div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">AI TRUST INDEX</div>
+                <strong style="font-size: 1.1rem; color: var(--accent-cyan);">96% Accurate</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI Executive Insights Card -->
+          <div class="glass-panel" style="padding: 2rem;">
+            <div class="ai-header">
+              <div class="ai-tag">
+                <span style="font-size: 1.25rem;">🤖</span>
+                <span>AI Transparency Audit Summary</span>
+              </div>
+              <span class="status-badge status-verified">Live Insights</span>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+              <div style="border-left: 3px solid var(--accent-emerald); padding-left: 1rem;">
+                <div style="font-weight: 700; font-size: 0.95rem;">Material Deliveries Authentic</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">150 bags of cement delivered and verified against Cloudinary receipt within 4% tolerance.</div>
+              </div>
+              <div style="border-left: 3px solid var(--accent-cyan); padding-left: 1rem;">
+                <div style="font-weight: 700; font-size: 0.95rem;">Stage Verified: Framing & Structure</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">AI computer vision classified multi-angle perspective photos matching structural milestone.</div>
+              </div>
+              <div style="border-left: 3px solid var(--accent-amber); padding-left: 1rem;">
+                <div style="font-weight: 700; font-size: 0.95rem; color: #fde68a;">Requisition Notice</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">1 pending requisition for 300 bags of cement ready for your authorization.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HO TAB 4: Material History (Paginated) -->
+      <div class="ho-tab-content" id="ho-materials-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.4rem;">Feature 4: Material Delivery History</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Verified delivery receipts and AI authenticity audits with pagination</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Page 1 of 1</span>
+            <button class="role-btn active" disabled>Prev</button>
+            <button class="role-btn active" disabled>Next</button>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div class="timeline-item glass-panel">
+            <div style="font-size: 2.2rem; display: flex; align-items: center;">📦</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <h4 style="font-size: 1.1rem;">UltraTech 53 Grade Cement (150 bags)</h4>
+                <span class="status-badge status-verified">AI Verified (96% Confidence)</span>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                Uploaded by Contractor Apex Builders • Verified on 2026-03-18T14:30:00Z
+              </p>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); background: rgba(0,0,0,0.2); padding: 0.6rem 0.85rem; border-radius: var(--radius-sm);">
+                AI Audit: Matched visual texture and packaging standards. Visual count matches delivery invoice within 4% tolerance.
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item glass-panel">
+            <div style="font-size: 2.2rem; display: flex; align-items: center;">📦</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <h4 style="font-size: 1.1rem;">Tata Tiscon 550D TMT Steel (3,500 kg)</h4>
+                <span class="status-badge status-verified">AI Verified (94% Confidence)</span>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                Uploaded by Contractor Apex Builders • Verified on 2026-03-15T11:20:00Z
+              </p>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); background: rgba(0,0,0,0.2); padding: 0.6rem 0.85rem; border-radius: var(--radius-sm);">
+                AI Audit: Standard grade ribbed reinforcement steel bundles verified. Mill test certificate matches invoice.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HO TAB 5: Progress History (Paginated) -->
+      <div class="ho-tab-content" id="ho-progress-tab" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.4rem;">Feature 5: Site Progress Photo History</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Visual site inspection gallery and chronological stage transitions</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Page 1 of 1</span>
+            <button class="role-btn active" disabled>Prev</button>
+            <button class="role-btn active" disabled>Next</button>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+              <div>
+                <span class="status-badge status-verified" style="margin-bottom: 0.35rem; display: inline-block;">Current Milestone</span>
+                <h4 style="font-size: 1.15rem;">Framing & Structure Casting (45% Complete)</h4>
+              </div>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">2026-03-19T11:00:00Z</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;">
+              Contractor notes: "Casting of 2nd floor roof slab completed with M25 concrete. Curing underway."
+            </p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <div style="width: 160px; height: 110px; background: #1e293b; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-glass);">
+                <span>📸 Site Angle 1</span>
+              </div>
+              <div style="width: 160px; height: 110px; background: #1e293b; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-glass);">
+                <span>📸 Slab Perspective</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HO TAB 6: AI Alerts -->
+      <div class="ho-tab-content" id="ho-alerts-tab" style="display: none;">
+        <div style="margin-bottom: 1.5rem;">
+          <h2 style="font-family: var(--font-heading); font-size: 1.4rem;">Feature 6: Active AI Alerts & Discrepancies</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Automated security notifications triggered by AI image audit or civil quantity deviations</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <!-- High Alert -->
+          <div class="glass-panel" style="padding: 1.5rem; border-left: 4px solid var(--accent-rose);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.3rem;">⚠️</span>
+                <strong style="color: #fda4af; font-size: 1.05rem;">Requisition Anomaly Flagged by Civil Benchmark Auditor</strong>
+              </div>
+              <span class="status-badge status-flagged">High Priority</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+              Contractor submitted a requisition for <strong>2,500 bags of cement</strong>. For your 2,400 sqft project, standard threshold is 1,200 bags (108% deviation).
+            </p>
+            <div style="display: flex; gap: 0.75rem;">
+              <button class="btn btn-primary" style="width: auto; padding: 0.4rem 1rem; font-size: 0.85rem;" onclick="switchHomeownerTab('ho-requests-tab')">👉 Review in Approvals</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HO TAB 7 & 8: Material Approvals -->
+      <div class="ho-tab-content" id="ho-requests-tab" style="display: none;">
+        <div style="margin-bottom: 1.5rem;">
+          <h2 style="font-family: var(--font-heading); font-size: 1.4rem;">Feature 7 & 8: Material Requisition Approvals</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Authorize or reject raw material orders submitted by your contractor</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <!-- Request Item 1 -->
+          <div class="glass-panel" style="padding: 1.75rem;" id="req-card-1">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+              <div>
+                <h4 style="font-size: 1.2rem; font-family: var(--font-heading);">300 Bags of Portland Pozzolana Cement</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Submitted by Apex Builders for Framing Milestone • Estimated cost: $1,950</p>
+              </div>
+              <span class="status-badge status-verified" id="req-badge-1">AI Checked: Safe</span>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.25); padding: 0.85rem 1rem; border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.88rem; color: var(--text-secondary);">
+              🤖 AI Benchmark Result: Requested quantity of 300 bags is well within standard civil engineering consumption limits (threshold: 1,200 bags) for 2,400 sqft area.
+            </div>
+
+            <div style="display: flex; gap: 1rem;" id="req-actions-1">
+              <button class="btn btn-primary" style="width: auto; padding: 0.6rem 1.5rem;" onclick="approveRequest('req-card-1', 'req-badge-1', 'req-actions-1')">
+                ✅ Feature 7: Approve Request
+              </button>
+              <button class="btn" style="width: auto; padding: 0.6rem 1.5rem; background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3);" onclick="rejectRequest('req-card-1', 'req-badge-1', 'req-actions-1')">
+                ❌ Feature 8: Reject Request
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
