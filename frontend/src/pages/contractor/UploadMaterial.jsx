@@ -187,6 +187,18 @@ export const UploadMaterial = ({ onComplete }) => {
           >
             Record Delivery to Material Ledger
           </Button>
+
+          {/* Photography Tips Card */}
+          <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 space-y-2">
+            <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+              <Camera className="w-3.5 h-3.5" /> Site Photography Tips for &gt;95% AI Confidence
+            </span>
+            <ul className="text-xs text-slate-400 space-y-1">
+              <li>• <strong>Step Back:</strong> Capture the entire stack or truck bed in one frame.</li>
+              <li>• <strong>Good Lighting:</strong> Ensure daylight or flash illuminates the pallet edges clearly.</li>
+              <li>• <strong>Show Invoice:</strong> Including the brand packaging or pallet tag helps automated verification.</li>
+            </ul>
+          </div>
         </Card>
       )}
     </div>

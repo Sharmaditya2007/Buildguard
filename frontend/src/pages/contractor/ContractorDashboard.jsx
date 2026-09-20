@@ -47,7 +47,7 @@ export const ContractorDashboard = ({ onNavigate }) => {
   return (
     <div className="space-y-6">
       {/* Contractor Header Banner */}
-      <div className="bg-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-stripe space-y-3">
+      <div className="bg-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-stripe space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
@@ -75,6 +75,22 @@ export const ContractorDashboard = ({ onNavigate }) => {
           >
             Quick Log Delivery
           </Button>
+        </div>
+
+        {/* 3 Value Pillars for Contractors */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 text-xs text-slate-300 border-t border-slate-800">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <span><strong>Proof of Delivery:</strong> Photos protect against claims</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0" />
+            <span><strong>Fast Sign-Offs:</strong> Homeowners approve orders fast</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-blue-400 flex-shrink-0" />
+            <span><strong>2-Tap Logging:</strong> No paperwork or complex apps</span>
+          </div>
         </div>
       </div>
 
